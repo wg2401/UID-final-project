@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Quiz Results</h2>
+    <h4>You scored {{ score }} out of {{ total }}</h4>
+    <hr>
+
+    <h5>Answer Breakdown:</h5>
+    {% for item in breakdown %}
+    <div class="mb-3">
+        <strong>{{ loop.index }}. {{ item.question }}</strong><br>
+        Your answer: {{ item.user_answer }}<br>
+        {% if item.correct %}
+            <span style="color: green;">Correct!</span>
+        {% else %}
+            <span style="color: red;">Incorrect. The answer was: {{ item.correct_answer }}</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <hr>
+    <a href="{{ retry_url }}" class="btn btn-primary">Retry</a>
+    <a href="/" class="btn btn-secondary">Home</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Question {{ question_num }} of {{ total }}</h2>
+    <hr>
+    {% if correct %}
+        <h4 style="color: green;">Correct!</h4>
+    {% else %}
+        <h4 style="color: red;">Incorrect</h4>
+        <p>Your answer: {{ user_answer }}</p>
+        <p>Correct answer: <strong>{{ correct_answer }}</strong></p>
+    {% endif %}
+    <br>
+    <a href="{{ next_url }}" class="btn btn-primary">
+        {% if question_num == total %}See Results{% else %}Next Question{% endif %}
+    </a>
+</div>
+</body>
+</html>

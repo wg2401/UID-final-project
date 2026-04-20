@@ -1,0 +1,137 @@
+{
+  "quiz": [
+    {
+      "question": "Who is the king of the Olympian gods?",
+      "choices": ["Poseidon", "Zeus", "Apollo", "Hermes"],
+      "answer": "Zeus"
+    },
+    {
+      "question": "Which god controls the sea?",
+      "choices": ["Zeus", "Ares", "Poseidon", "Dionysus"],
+      "answer": "Poseidon"
+    },
+    {
+      "question": "Who is the goddess of wisdom?",
+      "choices": ["Hera", "Athena", "Aphrodite", "Artemis"],
+      "answer": "Athena"
+    },
+    {
+      "question": "Which god is associated with love and beauty?",
+      "choices": ["Athena", "Hera", "Aphrodite", "Demeter"],
+      "answer": "Aphrodite"
+    },
+    {
+      "question": "What is Zeus primarily associated with?",
+      "choices": ["Fire", "Sky", "Sea", "Underworld"],
+      "answer": "Sky"
+    },
+    {
+      "question": "Which symbol is linked to Poseidon?",
+      "choices": ["Thunderbolt", "Trident", "Owl", "Bow"],
+      "answer": "Trident"
+    },
+    {
+      "question": "Who is known for strategy in war?",
+      "choices": ["Ares", "Athena", "Zeus", "Apollo"],
+      "answer": "Athena"
+    },
+    {
+      "question": "Which god is associated with music and the sun?",
+      "choices": ["Apollo", "Hermes", "Hephaestus", "Ares"],
+      "answer": "Apollo"
+    },
+    {
+      "question": "Who is the messenger of the gods?",
+      "choices": ["Hermes", "Zeus", "Poseidon", "Dionysus"],
+      "answer": "Hermes"
+    },
+    {
+      "question": "Which goddess is linked to agriculture?",
+      "choices": ["Artemis", "Demeter", "Hera", "Athena"],
+      "answer": "Demeter"
+    },
+    {
+      "question": "Who is the god of war (brute force)?",
+      "choices": ["Athena", "Ares", "Apollo", "Hermes"],
+      "answer": "Ares"
+    },
+    {
+      "question": "Which god is known for wine and celebration?",
+      "choices": ["Dionysus", "Zeus", "Poseidon", "Hephaestus"],
+      "answer": "Dionysus"
+    },
+    {
+      "question": "Who is the goddess of the hunt?",
+      "choices": ["Artemis", "Aphrodite", "Hera", "Demeter"],
+      "answer": "Artemis"
+    },
+    {
+      "question": "Which god is associated with fire and blacksmithing?",
+      "choices": ["Apollo", "Ares", "Hephaestus", "Hermes"],
+      "answer": "Hephaestus"
+    },
+    {
+      "question": "Who is the queen of the gods?",
+      "choices": ["Athena", "Hera", "Demeter", "Artemis"],
+      "answer": "Hera"
+    }
+  ],
+  "final_quiz": [
+    {
+      "question": "Who is the mother of Athena?",
+      "type": "mcq",
+      "choices": ["Hera", "Metis", "Leto", "Demeter"],
+      "answer": "Metis"
+    },
+    {
+      "question": "Name the Titan that Zeus overthrew to become king of the gods.",
+      "type": "text",
+      "answer": "Cronus"
+    },
+    {
+      "question": "Which god was born from Zeus's head?",
+      "type": "mcq",
+      "choices": ["Apollo", "Hermes", "Athena", "Ares"],
+      "answer": "Athena"
+    },
+    {
+      "question": "Who is the twin sister of Apollo?",
+      "type": "mcq",
+      "choices": ["Athena", "Artemis", "Hera", "Persephone"],
+      "answer": "Artemis"
+    },
+    {
+      "question": "Which river do souls cross to enter the underworld?",
+      "type": "text",
+      "answer": "River Styx"
+    },
+    {
+      "question": "Which god is associated with fire and craftsmanship?",
+      "type": "mcq",
+      "choices": ["Hephaestus", "Ares", "Hermes", "Dionysus"],
+      "answer": "Hephaestus"
+    },
+    {
+      "question": "Name the hero known for completing twelve labors.",
+      "type": "text",
+      "answer": "Heracles"
+    },
+    {
+      "question": "Who is the wife of Hades?",
+      "type": "mcq",
+      "choices": ["Hera", "Aphrodite", "Persephone", "Demeter"],
+      "answer": "Persephone"
+    },
+    {
+      "question": "Which god is known as the messenger and trickster?",
+      "type": "mcq",
+      "choices": ["Apollo", "Hermes", "Ares", "Zeus"],
+      "answer": "Hermes"
+    },
+    {
+      "question": "Name one of the three Fates in Greek mythology.",
+      "type": "text",
+      "answer": "Clotho"
+    }
+  ]
+}
