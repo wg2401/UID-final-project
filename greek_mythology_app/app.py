@@ -171,11 +171,23 @@ def results(quiz_type):
 
 @app.route("/learn/<int:lesson_num>")
 def learn(lesson_num):
-    # store the time the user entered this page (requirement #4)
     if "learn_log" not in session:
         session["learn_log"] = {}
+
     log = session["learn_log"]
-    log[str(lesson_num)] = str(datetime.datetime.now())
+    lesson_key = str(lesson_num)
+    now = str(datetime.datetime.now())
+
+    if lesson_key not in log:
+        log[lesson_key] = {
+            "first_entered": now,
+            "last_entered": now,
+            "visits": 1
+        }
+    else:
+        log[lesson_key]["last_entered"] = now
+        log[lesson_key]["visits"] = log[lesson_key]["visits"] + 1
+
     session["learn_log"] = log
 
     return render_template("learn.html", lesson_num=lesson_num)
