@@ -2,6 +2,7 @@
 import json
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, session
+from flask import send_from_directory
 
 app = Flask(__name__)
 app.secret_key = "mythology123"
@@ -172,6 +173,10 @@ def results(quiz_type):
 @app.route("/learn/<topic>")
 def learn(topic):
     return render_template(f"learn/{topic}.html")
+
+@app.route('/data/<path:filename>')
+def data_files(filename):
+    return send_from_directory('data', filename)
 
 
 if __name__ == "__main__":

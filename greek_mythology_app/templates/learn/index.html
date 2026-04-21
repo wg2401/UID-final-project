@@ -10,38 +10,22 @@
 
     <h1 class="text-center mb-4">Learn Greek Mythology</h1>
 
-    <h3 class="mt-4">Learn by Gods</h3>
-    <div class="row mt-3">
-
-        <div class="col-md-3">
-            <a href="/learn/zeus" class="btn btn-primary w-100 mb-2">Zeus</a>
-        </div>
-
-        <div class="col-md-3">
-            <a href="/learn/poseidon" class="btn btn-primary w-100 mb-2">Poseidon</a>
-        </div>
-
-        <div class="col-md-3">
-            <a href="/learn/athena" class="btn btn-primary w-100 mb-2">Athena</a>
-        </div>
-
-        <div class="col-md-3">
-            <a href="/learn/aphrodite" class="btn btn-primary w-100 mb-2">Aphrodite</a>
-        </div>
-
+    <!-- Dynamic content will be injected here -->
+    <h3 class="mt-4">Learn Topics</h3>
+    <div class="row mt-3" id="topics">
+        <!-- JS will populate this -->
     </div>
 
     <hr>
 
-    <h3>Other Topics</h3>
-
-    <a href="/learn/relationships" class="btn btn-warning mb-2">Relationships</a>
-    <a href="/learn/symbols" class="btn btn-info mb-2">Symbols</a>
-
-    <hr>
-
-    <a href="/" class="btn btn-secondary">Home</a>
+    <div class="text-center">
+        <a href="/" class="btn btn-secondary">Home</a>
+    </div>
 
 </div>
+
+<!-- Your JS file -->
+<script src="{{ url_for('static', filename='js/learn.js') }}"></script>
+
 </body>
 </html>
