@@ -1,0 +1,65 @@
+{
+  "lessons": [
+    {
+      "type": "god",
+      "title": "Zeus",
+      "role": "King of Gods",
+      "controls": "Sky & Lightning",
+      "symbol": "Thunderbolt"
+    },
+    {
+      "type": "god",
+      "title": "Poseidon",
+      "role": "God of Sea",
+      "controls": "Oceans, Earthquakes",
+      "symbol": "Trident"
+    },
+    {
+      "type": "god",
+      "title": "Athena",
+      "role": "Goddess of Wisdom",
+      "controls": "Strategy, Intelligence",
+      "symbol": "Owl"
+    },
+    {
+      "type": "god",
+      "title": "Aphrodite",
+      "role": "Goddess of Love",
+      "controls": "Beauty, Desire",
+      "symbol": "Dove"
+    },
+    {
+      "type": "checkpoint",
+      "title": "Mini Checkpoint",
+      "prompt": "Match symbol to god",
+      "instructions": "Immediate feedback before quiz",
+      "questions": [
+        {
+          "symbol": "Thunderbolt",
+          "answer": "Zeus"
+        },
+        {
+          "symbol": "Trident",
+          "answer": "Poseidon"
+        },
+        {
+          "symbol": "Owl",
+          "answer": "Athena"
+        },
+        {
+          "symbol": "Dove",
+          "answer": "Aphrodite"
+        }
+      ]
+    },
+    {
+      "type": "relationships",
+      "title": "Relationships",
+      "points": [
+        "Zeus is central figure",
+        "Many gods are siblings/children",
+        "Understanding relationships helps memory"
+      ]
+    }
+  ]
+}

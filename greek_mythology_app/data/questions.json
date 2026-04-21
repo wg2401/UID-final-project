@@ -103,7 +103,7 @@
     {
       "question": "Which river do souls cross to enter the underworld?",
       "type": "text",
-      "answer": "River Styx"
+      "answer": ["River Styx", "Styx"]
     },
     {
       "question": "Which god is associated with fire and craftsmanship?",
@@ -131,7 +131,7 @@
     {
       "question": "Name one of the three Fates in Greek mythology.",
       "type": "text",
-      "answer": "Clotho"
+      "answer": ["Clotho", "Lachesis", "Atropos"]
     }
   ]
 }

@@ -1,3 +1,4 @@
+#app.py
 import json
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -9,6 +10,23 @@ def load_questions():
     with open("data/questions.json") as f:
         return json.load(f)
 
+def normalize_text(s):
+    s = s.strip().lower()
+    s = s.replace(",", "")
+    s = s.replace(".", "")
+    s = s.replace("the ", "")
+    return s
+
+def text_answer_is_correct(user_answer, correct_answer):
+    user_answer = normalize_text(user_answer)
+
+    if isinstance(correct_answer, list):
+        for answer in correct_answer:
+            if user_answer == normalize_text(answer):
+                return True
+        return False
+
+    return user_answer == normalize_text(correct_answer)
 
 #Home
 @app.route("/")
@@ -87,7 +105,7 @@ def feedback(quiz_type, question_num):
     correct_answer = question["answer"]
 
     if question.get("type") == "text":
-        correct = user_answer.lower() == correct_answer.lower()
+        correct = text_answer_is_correct(user_answer, correct_answer)
     else:
         correct = user_answer == correct_answer
 
@@ -101,9 +119,14 @@ def feedback(quiz_type, question_num):
     else:
         next_url = url_for("results", quiz_type=quiz_type)
 
-    return render_template("feedback.html", correct=correct, correct_answer=correct_answer,
-                           user_answer=user_answer, next_url=next_url,
-                           question_num=question_num, total=total)
+    if isinstance(correct_answer, list):
+        correct_answer_display = ", ".join(correct_answer)
+    else:
+        correct_answer_display = correct_answer
+
+    return render_template("feedback.html", correct=correct, correct_answer=correct_answer_display,
+                        user_answer=user_answer, next_url=next_url,
+                        question_num=question_num, total=total)
 
 
 #Results
@@ -128,7 +151,7 @@ def results(quiz_type):
         correct_answer = q["answer"]
 
         if q.get("type") == "text":
-            correct = user_answer.lower() == correct_answer.lower()
+            correct = text_answer_is_correct(user_answer, correct_answer)
         else:
             correct = user_answer == correct_answer
 
@@ -138,7 +161,7 @@ def results(quiz_type):
         breakdown.append({
             "question": q["question"],
             "user_answer": user_answer,
-            "correct_answer": correct_answer,
+            "correct_answer": ", ".join(correct_answer) if isinstance(correct_answer, list) else correct_answer,
             "correct": correct
         })
 
