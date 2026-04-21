@@ -146,16 +146,9 @@ def results(quiz_type):
                            breakdown=breakdown, retry_url=retry_url)
 
 
-@app.route("/learn/<int:lesson_num>")
-def learn(lesson_num):
-    # store the time the user entered this page (requirement #4)
-    if "learn_log" not in session:
-        session["learn_log"] = {}
-    log = session["learn_log"]
-    log[str(lesson_num)] = str(datetime.datetime.now())
-    session["learn_log"] = log
-
-    return render_template("learn.html", lesson_num=lesson_num)
+@app.route("/learn/<topic>")
+def learn(topic):
+    return render_template(f"learn/{topic}.html")
 
 
 if __name__ == "__main__":
