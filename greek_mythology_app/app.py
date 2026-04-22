@@ -11,6 +11,14 @@ def load_questions():
     with open("data/questions.json") as f:
         return json.load(f)
 
+def load_learn_routes():
+    with open("data/learn.json") as f:
+        return json.load(f)
+
+def load_lessons():
+    with open("data/lessons.json") as f:
+        return json.load(f)
+
 def normalize_text(s):
     s = s.strip().lower()
     s = s.replace(",", "")
@@ -29,10 +37,100 @@ def text_answer_is_correct(user_answer, correct_answer):
 
     return user_answer == normalize_text(correct_answer)
 
+def get_learning_progress():
+    return session.get("learning_progress", {
+        "started_at": None,
+        "visited_topics": [],
+        "completed_topics": [],
+        "checkpoint_answers": {},
+        "checkpoint_completed_at": None
+    })
+
 #Home
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+# Start learning
+@app.route("/start/learn")
+def start_learn():
+    session["learning_progress"] = {
+        "started_at": str(datetime.datetime.now()),
+        "visited_topics": [],
+        "completed_topics": [],
+        "checkpoint_answers": {},
+        "checkpoint_completed_at": None
+    }
+    return redirect(url_for("learn_index"))
+
+
+# Learning index
+@app.route("/learn")
+def learn_index():
+    lessons_data = load_lessons()
+    lessons = lessons_data["lessons"]
+
+    progress = get_learning_progress()
+    lesson_order = ["zeus", "poseidon", "athena", "aphrodite", "relationships", "symbols"]
+
+    completed_count = len([topic for topic in progress["completed_topics"] if topic in lesson_order])
+    total_topics = len(lesson_order)
+
+    return render_template(
+        "learn/index.html",
+        lessons=lessons,
+        completed_count=completed_count,
+        total_topics=total_topics
+    )
+
+
+@app.route("/learn/<topic>")
+def learn(topic):
+    progress = get_learning_progress()
+
+    progress["visited_topics"].append({
+        "topic": topic,
+        "entered_at": str(datetime.datetime.now())
+    })
+
+    session["learning_progress"] = progress
+
+    return render_template(f"learn/{topic}.html", topic=topic)
+
+
+@app.route("/learn/complete/<topic>", methods=["POST"])
+def complete_topic(topic):
+    progress = get_learning_progress()
+    lesson_order = ["zeus", "poseidon", "athena", "aphrodite", "relationships", "symbols"]
+
+    if topic not in progress["completed_topics"]:
+        progress["completed_topics"].append(topic)
+
+    session["learning_progress"] = progress
+
+    if topic in lesson_order:
+        current_index = lesson_order.index(topic)
+        if current_index < len(lesson_order) - 1:
+            next_topic = lesson_order[current_index + 1]
+            return redirect(url_for("learn", topic=next_topic))
+
+    return redirect(url_for("learn_index"))
+
+
+@app.route("/learn/checkpoint/save", methods=["POST"])
+def save_checkpoint():
+    progress = get_learning_progress()
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"status": "error", "message": "No data received"}), 400
+
+    progress["checkpoint_answers"] = data
+    progress["checkpoint_completed_at"] = str(datetime.datetime.now())
+    session["learning_progress"] = progress
+
+    return jsonify({"status": "ok"})
 
 
 #Quiz 1
@@ -170,9 +268,6 @@ def results(quiz_type):
                            breakdown=breakdown, retry_url=retry_url)
 
 
-@app.route("/learn/<topic>")
-def learn(topic):
-    return render_template(f"learn/{topic}.html")
 
 @app.route('/data/<path:filename>')
 def data_files(filename):
