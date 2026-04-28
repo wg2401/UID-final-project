@@ -214,7 +214,7 @@ def complete_topic(topic):
     if topic not in LESSON_ORDER:
         return redirect(url_for("learn_index"))
 
-    progress = get_learning_progress()
+    progress = get_learning_progress() 
     now = str(datetime.datetime.now())
 
     if topic not in progress["completed_topics"]:
