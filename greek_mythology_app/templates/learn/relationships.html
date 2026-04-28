@@ -1,28 +1,65 @@
-<h1>Relationships</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Relationships</title>
 
-<img src="{{ url_for('static', filename='images/family.png') }}" class="img-fluid mb-3">
-
-<ul>
-    <li>Gods are part of an interconnected family</li>
-    <li>Most trace back to Zeus</li>
-    <li>Relationships explain conflicts</li>
-</ul>
-
-<h4>Power Division</h4>
-<ul>
-    <li>Zeus – Sky</li>
-    <li>Poseidon – Sea</li>
-    <li>Hades – Underworld</li>
-</ul>
-
-<h4>Conflicts</h4>
-<ul>
-    <li>Family tensions cause rivalries</li>
-</ul>
-    <div class="d-flex gap-2">
-    <a href="/learn" class="btn btn-secondary">Back</a>
-
-    <form method="POST" action="/learn/complete/relationships">
-        <button type="submit" class="btn btn-success">Next Lesson</button>
-    </form>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --page-bg:#F5F8FF; --card-bg:#FFFFFF; --navy:#1E2A45; --accent:#2B5CE6; --accent-dark:#1E47C8; --accent-soft:#EBF0FD; --border:#D8E2F5; --muted:#8A96B0; }
+        body { background-color:var(--page-bg); color:var(--navy); font-family:'Inter',sans-serif; font-size:16px; line-height:1.6; }
+        h1,h2,h3,h4,h5,.navbar-brand { font-family:'Playfair Display',serif; color:var(--navy); font-weight:700; }
+        .navbar { background-color:var(--card-bg); border-bottom:1px solid var(--border); padding:16px 24px; }
+        .navbar-brand { font-size:22px; }
+        .nav-link-soft { color:var(--muted); text-decoration:none; font-size:14px; }
+        .nav-link-soft:hover { color:var(--accent); }
+        .page-card,.topic-card,.card { background-color:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:32px; box-shadow:0 8px 22px rgba(30,42,69,.05); }
+        .lesson-image { display:block; width:100%; max-width:420px; height:280px; object-fit:cover; object-position:center; border-radius:12px; border:1px solid var(--border); margin:0 auto 24px auto; background-color:var(--accent-soft); }
+        .section-heading { margin-top:24px; margin-bottom:12px; font-size:22px; }
+        ul { padding-left:1.25rem; } li { margin-bottom:8px; }
+        .alert-info { background-color:var(--accent-soft); color:var(--accent); border:1px solid var(--border); border-radius:12px; font-weight:500; }
+        .btn-primary,.btn-success { background-color:var(--accent)!important; border-color:var(--accent)!important; color:#fff!important; border-radius:8px; padding:10px 18px; font-weight:500; }
+        .btn-primary:hover,.btn-success:hover { background-color:var(--accent-dark)!important; border-color:var(--accent-dark)!important; }
+        .btn-secondary { background-color:var(--accent-soft)!important; border-color:var(--border)!important; color:var(--navy)!important; border-radius:8px; padding:10px 18px; font-weight:500; }
+        .btn-secondary:hover { color:var(--accent)!important; border-color:var(--accent)!important; }
+        hr { border-color:var(--border); margin:28px 0; opacity:1; }
+        #topics .card,#topics .topic-card { height:100%; border-radius:14px; border:1px solid var(--border); background-color:var(--card-bg); }
+        #topics img,.topic-card img,.card img:not(.lesson-image) { width:100%; height:190px; object-fit:cover; border-radius:10px; border:1px solid var(--border); background-color:var(--accent-soft); }
+    </style>
+</head>
+<body>
+<nav class="navbar d-flex justify-content-between align-items-center">
+    <span class="navbar-brand">The Olympians</span>
+    <a href="/" class="nav-link-soft">Home</a>
+</nav>
+<div class="container my-5" style="max-width: 780px;">
+    <div class="page-card">
+        <h1 class="text-center mb-4">Relationships</h1>
+        <img src="{{ url_for('static', filename='images/family.png') }}" class="lesson-image" alt="Relationships">
+        <ul>
+            <li>Gods are part of an interconnected family</li>
+            <li>Most trace back to Zeus</li>
+            <li>Relationships explain conflicts</li>
+        </ul>
+        <h4 class="section-heading">Power Division</h4>
+        <ul>
+            <li>Zeus – Sky</li>
+            <li>Poseidon – Sea</li>
+            <li>Hades – Underworld</li>
+        </ul>
+        <h4 class="section-heading">Conflicts</h4>
+        <ul>
+            <li>Family tensions cause rivalries</li>
+        </ul>
+        <hr>
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="/learn" class="btn btn-secondary">Back</a>
+            <form method="POST" action="/learn/complete/relationships">
+                <button type="submit" class="btn btn-success">Next Lesson</button>
+            </form>
+        </div>
+    </div>
 </div>
+
+</body>
+</html>
