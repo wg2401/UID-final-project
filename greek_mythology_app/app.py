@@ -92,14 +92,20 @@ def get_learning_progress():
     if not progress:
         progress = build_learning_progress()
 
+    if "visited_topics" not in progress:
+        progress["visited_topics"] = []
+
+    if "completed_topics" not in progress:
+        progress["completed_topics"] = []
+
     if "section_status" not in progress:
         progress["section_status"] = {}
 
-    if "quiz_scores" not in progress:
-        progress["quiz_scores"] = {
-            "quiz": None,
-            "final": None
-        }
+    if "checkpoint_answers" not in progress:
+        progress["checkpoint_answers"] = {}
+
+    if "checkpoint_completed_at" not in progress:
+        progress["checkpoint_completed_at"] = None
 
     if "checkpoint_score" not in progress:
         progress["checkpoint_score"] = 0
@@ -109,6 +115,18 @@ def get_learning_progress():
 
     if "checkpoint_passed" not in progress:
         progress["checkpoint_passed"] = False
+
+    if "quiz_scores" not in progress:
+        progress["quiz_scores"] = {
+            "quiz": None,
+            "final": None
+        }
+
+    if "quiz" not in progress["quiz_scores"]:
+        progress["quiz_scores"]["quiz"] = None
+
+    if "final" not in progress["quiz_scores"]:
+        progress["quiz_scores"]["final"] = None
 
     if "unlock_state" not in progress:
         progress["unlock_state"] = {
@@ -156,9 +174,12 @@ def learn_index():
     )
 
 
-@app.route("/learn/<topic>")
+
 @app.route("/learn/<topic>")
 def learn(topic):
+    if topic not in LESSON_ORDER:
+        return redirect(url_for("learn_index"))
+
     progress = get_learning_progress()
     now = str(datetime.datetime.now())
 
@@ -190,6 +211,9 @@ def learn(topic):
 
 @app.route("/learn/complete/<topic>", methods=["POST"])
 def complete_topic(topic):
+    if topic not in LESSON_ORDER:
+        return redirect(url_for("learn_index"))
+
     progress = get_learning_progress()
     now = str(datetime.datetime.now())
 
@@ -214,11 +238,10 @@ def complete_topic(topic):
     progress = update_unlock_state(progress)
     session["learning_progress"] = progress
 
-    if topic in LESSON_ORDER:
-        current_index = LESSON_ORDER.index(topic)
-        if current_index < len(LESSON_ORDER) - 1:
-            next_topic = LESSON_ORDER[current_index + 1]
-            return redirect(url_for("learn", topic=next_topic))
+    current_index = LESSON_ORDER.index(topic)
+    if current_index < len(LESSON_ORDER) - 1:
+        next_topic = LESSON_ORDER[current_index + 1]
+        return redirect(url_for("learn", topic=next_topic))
 
     return redirect(url_for("learn_index"))
 
