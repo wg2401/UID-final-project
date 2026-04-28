@@ -1,30 +1,127 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Learn</title>
+    <title>Learn Greek Mythology</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .topic-card {
+            min-height: 160px;
+        }
+
+        .status-badge {
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 
 <body>
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Learn Greek Mythology</h1>
+<div class="container mt-5 mb-5">
+    <h1 class="text-center mb-3">Learn Greek Mythology</h1>
+    <p class="text-center text-muted">
+        Work through the learning topics, complete the checkpoint, and unlock the quizzes.
+    </p>
 
-    <div class="alert alert-info text-center">
-        Completed {{ completed_count }} of {{ total_topics }} learning topics
+    <div class="row g-3 mt-2">
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Topics Completed</h6>
+                    <h3 class="mb-0">{{ completed_count }} / {{ total_topics }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Checkpoint Score</h6>
+                    <h3 class="mb-0">{{ progress.checkpoint_score }} / {{ progress.checkpoint_total }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Quiz Status</h6>
+                    {% if progress.unlock_state.quiz_unlocked %}
+                        <span class="badge bg-success status-badge">Unlocked</span>
+                    {% else %}
+                        <span class="badge bg-secondary status-badge">Locked</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Final Quiz Status</h6>
+                    {% if progress.unlock_state.final_unlocked %}
+                        <span class="badge bg-warning text-dark status-badge">Unlocked</span>
+                    {% else %}
+                        <span class="badge bg-secondary status-badge">Locked</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 
-    <h3 class="mt-4">Learn Topics</h3>
-    <div class="row mt-3" id="topics"></div>
+    <div class="mt-4">
+        <div class="progress" style="height: 24px;">
+            <div
+                id="topic-progress-bar"
+                class="progress-bar"
+                role="progressbar"
+                aria-valuenow="{{ completed_count }}"
+                aria-valuemin="0"
+                aria-valuemax="{{ total_topics }}"
+                data-completed="{{ completed_count }}"
+                data-total="{{ total_topics }}"
+            >
+                {{ completed_count }} / {{ total_topics }} topics complete
+            </div>
+        </div>
+    </div>
 
-    <hr>
+    <div class="mt-4">
+        {% if progress.checkpoint_passed %}
+            <div class="alert alert-success text-center">
+                Checkpoint passed. You are eligible to unlock the main quiz once all topics are completed.
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                Complete all learning topics and pass the checkpoint to unlock the main quiz.
+            </div>
+        {% endif %}
+    </div>
+
+    <h3 class="mt-4 mb-3">Learn Topics</h3>
+    <div class="row g-3" id="topics"></div>
+
+    <hr class="my-4">
 
     <div class="text-center">
-        <a href="/start/quiz" class="btn btn-success me-2">Go to Quiz</a>
+        {% if progress.unlock_state.quiz_unlocked %}
+            <a href="/start/quiz" class="btn btn-success me-2">Go to Quiz</a>
+        {% else %}
+            <button class="btn btn-success me-2" disabled>Go to Quiz (Locked)</button>
+        {% endif %}
+
+        {% if progress.unlock_state.final_unlocked %}
+            <a href="/start/final" class="btn btn-warning me-2">Go to Final Quiz</a>
+        {% else %}
+            <button class="btn btn-warning me-2" disabled>Go to Final Quiz (Locked)</button>
+        {% endif %}
+
         <a href="/" class="btn btn-secondary">Home</a>
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/learn.js') }}"></script>
+<script id="learning-progress-data" type="application/json">
+{{ progress | tojson }}
+</script>
 
+<script src="{{ url_for('static', filename='js/learn.js') }}"></script>
 </body>
 </html>
