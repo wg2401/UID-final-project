@@ -173,7 +173,60 @@ def learn_index():
         total_topics=total_topics
     )
 
+@app.route("/match")
+def match():
+    return render_template("match.html")
 
+@app.route("/match/submit", methods=["POST"])
+def match_submit():
+    data = request.get_json()
+
+    # Correct mapping (left_id → right_id)
+    correct_map = {
+        "1": "4",  # Zeus → Thunderbolt
+        "2": "2",  # Poseidon → Trident
+        "3": "1",  # Athena → Owl
+        "4": "3"   # Aphrodite → Dove
+    }
+
+    # For display (so you don’t show "1 → 2")
+    LEFT_MAP = {
+        "1": "Zeus",
+        "2": "Poseidon",
+        "3": "Athena",
+        "4": "Aphrodite"
+    }
+
+    RIGHT_MAP = {
+        "1": "Thunderbolt",
+        "2": "Trident",
+        "3": "Owl",
+        "4": "Dove"
+    }
+
+    score = 0
+    total = len(correct_map)
+
+    results = []
+
+    for left_id, right_id in data.items():
+        is_correct = correct_map.get(left_id) == right_id
+
+        if is_correct:
+            score += 1
+
+        results.append({
+            "left": LEFT_MAP.get(left_id, left_id),
+            "right": RIGHT_MAP.get(right_id, right_id),
+            "correct": is_correct
+        })
+
+    return render_template(
+        "match_results.html",
+        score=score,
+        total=total,
+        results=results
+    )
 
 @app.route("/learn/<topic>")
 def learn(topic):

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Match Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/match.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Match Results</h2>
+
+    <div class="score-box">
+        <h3>Score: {{ score }} / {{ total }}</h3>
+    </div>
+
+    <div class="results-table">
+        <div class="row header">
+            <div>Left</div>
+            <div>Right</div>
+            <div>Status</div>
+        </div>
+
+        {% for r in results %}
+        <div class="row">
+            <div>{{ r.left }}</div>
+            <div>{{ r.right }}</div>
+            <div>
+                {% if r.correct %}
+                    <span class="correct">✅ Correct</span>
+                {% else %}
+                    <span class="wrong">❌ Wrong</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="actions">
+        <a href="/match" class="btn-submit">Try Again</a>
+        <a href="/" class="btn-back">Home</a>
+    </div>
+</div>
+
+</body>
+</html>

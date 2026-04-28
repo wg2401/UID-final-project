@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Match the Columns</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/match.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Match the Columns</h2>
+
+    <div class="match-container" id="match-container">
+        <canvas id="line-canvas"></canvas>
+
+        <div class="column left">
+            <div class="item left-item" data-id="1">Zeus</div>
+            <div class="item left-item" data-id="2">Poseidon</div>
+            <div class="item left-item" data-id="3">Athena</div>
+            <div class="item left-item" data-id="4">Aphrodite</div>
+        </div>
+
+        <div class="column right">
+            <div class="item right-item" data-id="1">Owl</div>
+            <div class="item right-item" data-id="2">Trident</div>
+            <div class="item right-item" data-id="3">Dove</div>
+            <div class="item right-item" data-id="4">Thunderbolt</div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="/" class="btn-back">← Back</a>
+
+        <button id="submit-btn" class="btn-submit" style="display:none;">
+            See Results
+        </button>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/match.js') }}"></script>
+</body>
+</html>
