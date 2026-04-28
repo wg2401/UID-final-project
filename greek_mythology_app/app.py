@@ -37,14 +37,87 @@ def text_answer_is_correct(user_answer, correct_answer):
 
     return user_answer == normalize_text(correct_answer)
 
-def get_learning_progress():
-    return session.get("learning_progress", {
+LESSON_ORDER = ["zeus", "poseidon", "athena", "aphrodite", "relationships", "symbols"]
+
+CHECKPOINT_ANSWER_KEY = {
+    "thunderbolt": "zeus",
+    "trident": "poseidon",
+    "owl": "athena",
+    "dove": "aphrodite"
+}
+
+CHECKPOINT_MIN_SCORE = 3
+FINAL_UNLOCK_MIN_SCORE = 10
+
+
+def build_learning_progress():
+    return {
         "started_at": None,
         "visited_topics": [],
         "completed_topics": [],
+        "section_status": {},
         "checkpoint_answers": {},
-        "checkpoint_completed_at": None
-    })
+        "checkpoint_completed_at": None,
+        "checkpoint_score": 0,
+        "checkpoint_total": len(CHECKPOINT_ANSWER_KEY),
+        "checkpoint_passed": False,
+        "quiz_scores": {
+            "quiz": None,
+            "final": None
+        },
+        "unlock_state": {
+            "quiz_unlocked": False,
+            "final_unlocked": False
+        }
+    }
+
+
+def update_unlock_state(progress):
+    completed_count = len([topic for topic in progress["completed_topics"] if topic in LESSON_ORDER])
+
+    quiz_score = 0
+    if progress["quiz_scores"]["quiz"] is not None:
+        quiz_score = progress["quiz_scores"]["quiz"]["score"]
+
+    progress["unlock_state"] = {
+        "quiz_unlocked": completed_count == len(LESSON_ORDER) and progress["checkpoint_passed"],
+        "final_unlocked": quiz_score >= FINAL_UNLOCK_MIN_SCORE
+    }
+
+    return progress
+
+def get_learning_progress():
+    progress = session.get("learning_progress")
+
+    if not progress:
+        progress = build_learning_progress()
+
+    if "section_status" not in progress:
+        progress["section_status"] = {}
+
+    if "quiz_scores" not in progress:
+        progress["quiz_scores"] = {
+            "quiz": None,
+            "final": None
+        }
+
+    if "checkpoint_score" not in progress:
+        progress["checkpoint_score"] = 0
+
+    if "checkpoint_total" not in progress:
+        progress["checkpoint_total"] = len(CHECKPOINT_ANSWER_KEY)
+
+    if "checkpoint_passed" not in progress:
+        progress["checkpoint_passed"] = False
+
+    if "unlock_state" not in progress:
+        progress["unlock_state"] = {
+            "quiz_unlocked": False,
+            "final_unlocked": False
+        }
+
+    progress = update_unlock_state(progress)
+    return progress
 
 #Home
 @app.route("/")
@@ -55,13 +128,10 @@ def index():
 # Start learning
 @app.route("/start/learn")
 def start_learn():
-    session["learning_progress"] = {
-        "started_at": str(datetime.datetime.now()),
-        "visited_topics": [],
-        "completed_topics": [],
-        "checkpoint_answers": {},
-        "checkpoint_completed_at": None
-    }
+    progress = build_learning_progress()
+    progress["started_at"] = str(datetime.datetime.now())
+    progress = update_unlock_state(progress)
+    session["learning_progress"] = progress
     return redirect(url_for("learn_index"))
 
 
@@ -72,28 +142,47 @@ def learn_index():
     lessons = lessons_data["lessons"]
 
     progress = get_learning_progress()
-    lesson_order = ["zeus", "poseidon", "athena", "aphrodite", "relationships", "symbols"]
+    completed_count = len([topic for topic in progress["completed_topics"] if topic in LESSON_ORDER])
+    total_topics = len(LESSON_ORDER)
 
-    completed_count = len([topic for topic in progress["completed_topics"] if topic in lesson_order])
-    total_topics = len(lesson_order)
+    session["learning_progress"] = progress
 
     return render_template(
         "learn/index.html",
         lessons=lessons,
+        progress=progress,
         completed_count=completed_count,
         total_topics=total_topics
     )
 
 
 @app.route("/learn/<topic>")
+@app.route("/learn/<topic>")
 def learn(topic):
     progress = get_learning_progress()
+    now = str(datetime.datetime.now())
+
+    if topic not in progress["section_status"]:
+        progress["section_status"][topic] = {
+            "visited": False,
+            "completed": False,
+            "first_entered_at": now,
+            "last_entered_at": now,
+            "completed_at": None,
+            "visits": 1
+        }
+    else:
+        progress["section_status"][topic]["last_entered_at"] = now
+        progress["section_status"][topic]["visits"] = progress["section_status"][topic]["visits"] + 1
+
+    progress["section_status"][topic]["visited"] = True
 
     progress["visited_topics"].append({
         "topic": topic,
-        "entered_at": str(datetime.datetime.now())
+        "entered_at": now
     })
 
+    progress = update_unlock_state(progress)
     session["learning_progress"] = progress
 
     return render_template(f"learn/{topic}.html", topic=topic)
@@ -102,17 +191,33 @@ def learn(topic):
 @app.route("/learn/complete/<topic>", methods=["POST"])
 def complete_topic(topic):
     progress = get_learning_progress()
-    lesson_order = ["zeus", "poseidon", "athena", "aphrodite", "relationships", "symbols"]
+    now = str(datetime.datetime.now())
 
     if topic not in progress["completed_topics"]:
         progress["completed_topics"].append(topic)
 
+    if topic not in progress["section_status"]:
+        progress["section_status"][topic] = {
+            "visited": True,
+            "completed": True,
+            "first_entered_at": now,
+            "last_entered_at": now,
+            "completed_at": now,
+            "visits": 1
+        }
+    else:
+        progress["section_status"][topic]["visited"] = True
+        progress["section_status"][topic]["completed"] = True
+        progress["section_status"][topic]["completed_at"] = now
+        progress["section_status"][topic]["last_entered_at"] = now
+
+    progress = update_unlock_state(progress)
     session["learning_progress"] = progress
 
-    if topic in lesson_order:
-        current_index = lesson_order.index(topic)
-        if current_index < len(lesson_order) - 1:
-            next_topic = lesson_order[current_index + 1]
+    if topic in LESSON_ORDER:
+        current_index = LESSON_ORDER.index(topic)
+        if current_index < len(LESSON_ORDER) - 1:
+            next_topic = LESSON_ORDER[current_index + 1]
             return redirect(url_for("learn", topic=next_topic))
 
     return redirect(url_for("learn_index"))
@@ -126,16 +231,43 @@ def save_checkpoint():
     if not data:
         return jsonify({"status": "error", "message": "No data received"}), 400
 
+    normalized_answers = {}
+    for key, value in data.items():
+        normalized_answers[str(key).strip().lower()] = str(value).strip().lower()
+
+    score = 0
+    for symbol, correct_god in CHECKPOINT_ANSWER_KEY.items():
+        if normalized_answers.get(symbol) == correct_god:
+            score += 1
+
     progress["checkpoint_answers"] = data
     progress["checkpoint_completed_at"] = str(datetime.datetime.now())
+    progress["checkpoint_score"] = score
+    progress["checkpoint_total"] = len(CHECKPOINT_ANSWER_KEY)
+    progress["checkpoint_passed"] = score >= CHECKPOINT_MIN_SCORE
+
+    progress = update_unlock_state(progress)
     session["learning_progress"] = progress
 
-    return jsonify({"status": "ok"})
+    return jsonify({
+        "status": "ok",
+        "checkpoint_score": score,
+        "checkpoint_total": len(CHECKPOINT_ANSWER_KEY),
+        "checkpoint_passed": progress["checkpoint_passed"],
+        "unlock_state": progress["unlock_state"]
+    })
 
 
 #Quiz 1
 @app.route("/start/quiz")
 def start_quiz():
+    progress = get_learning_progress()
+    progress = update_unlock_state(progress)
+    session["learning_progress"] = progress
+
+    if not progress["unlock_state"]["quiz_unlocked"]:
+        return redirect(url_for("learn_index"))
+
     session["quiz_answers"] = {}
     session["quiz_start_time"] = str(datetime.datetime.now())
     return redirect(url_for("quiz", question_num=1))
@@ -163,6 +295,13 @@ def quiz(question_num):
 #Final Quiz
 @app.route("/start/final")
 def start_final():
+    progress = get_learning_progress()
+    progress = update_unlock_state(progress)
+    session["learning_progress"] = progress
+
+    if not progress["unlock_state"]["final_unlocked"]:
+        return redirect(url_for("learn_index"))
+
     session["final_answers"] = {}
     session["final_start_time"] = str(datetime.datetime.now())
     return redirect(url_for("final_quiz", question_num=1))
@@ -263,7 +402,14 @@ def results(quiz_type):
             "correct_answer": ", ".join(correct_answer) if isinstance(correct_answer, list) else correct_answer,
             "correct": correct
         })
-
+    progress = get_learning_progress()
+    progress["quiz_scores"][quiz_type] = {
+        "score": score,
+        "total": len(questions),
+        "completed_at": str(datetime.datetime.now())
+    }
+    progress = update_unlock_state(progress)
+    session["learning_progress"] = progress
     return render_template("results.html", score=score, total=len(questions),
                            breakdown=breakdown, retry_url=retry_url)
 
@@ -306,6 +452,11 @@ def final_check(question_num):
     correct_display = ', '.join(q['answer']) if isinstance(q['answer'], list) else q['answer']
     return jsonify({'correct': correct, 'correct_answer': correct_display, 'next_url': next_url})
 
+@app.route("/learn/progress")
+def learn_progress():
+    progress = get_learning_progress()
+    session["learning_progress"] = progress
+    return jsonify(progress)
 
 
 @app.route('/data/<path:filename>')
