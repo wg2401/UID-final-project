@@ -2,23 +2,139 @@
 <html>
 <head>
     <title>Feedback</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F5F8FF;
+            color: #1E2A45;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; color: #1E2A45; }
+        .label-text { font-size: 14px; color: #8A96B0; }
+
+        .navbar {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #D8E2F5;
+            padding: 16px 24px;
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1E2A45 !important;
+        }
+        .btn-home { font-size: 14px; color: #8A96B0; text-decoration: none; }
+        .btn-home:hover { color: #2B5CE6; }
+
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #D8E2F5;
+            border-radius: 12px;
+            padding: 32px;
+        }
+        .card-correct  { border-left: 4px solid #1A9E6A; border-radius: 0 12px 12px 0; }
+        .card-incorrect { border-left: 4px solid #D94F4F; border-radius: 0 12px 12px 0; }
+
+        .progress {
+            background-color: #D8E2F5;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 32px;
+        }
+        .progress-bar { background-color: #2B5CE6; border-radius: 4px; }
+
+        .result-icon { font-size: 48px; line-height: 1; }
+        .result-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .correct-label   { color: #1A9E6A; }
+        .incorrect-label { color: #D94F4F; }
+
+        .answer-box {
+            background-color: #F5F8FF;
+            border: 1px solid #D8E2F5;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .answer-box-label { font-size: 13px; color: #8A96B0; margin-bottom: 4px; }
+        .answer-box-value { font-size: 16px; font-weight: 500; }
+        .text-correct   { color: #1A9E6A; }
+        .text-incorrect { color: #D94F4F; }
+
+        .btn-next {
+            display: block;
+            width: 100%;
+            background-color: #2B5CE6;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 24px;
+            transition: background-color 0.15s;
+        }
+        .btn-next:hover { background-color: #1E47C8; color: #FFFFFF; }
+
+        hr { border-color: #D8E2F5; margin: 24px 0; }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2>Question {{ question_num }} of {{ total }}</h2>
-    <hr>
-    {% if correct %}
-        <h4 style="color: green;">Correct!</h4>
-    {% else %}
-        <h4 style="color: red;">Incorrect</h4>
-        <p>Your answer: {{ user_answer }}</p>
-        <p>Correct answer: <strong>{{ correct_answer }}</strong></p>
-    {% endif %}
-    <br>
-    <a href="{{ next_url }}" class="btn btn-primary">
-        {% if question_num == total %}See Results{% else %}Next Question{% endif %}
-    </a>
+
+<nav class="navbar d-flex justify-content-between align-items-center">
+    <span class="navbar-brand">The Olympians</span>
+    <a href="/" class="btn-home">Home</a>
+</nav>
+
+<div class="container mt-4" style="max-width: 640px;">
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="label-text">Question {{ question_num }} of {{ total }}</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar"
+             style="width: {{ (question_num / total * 100) | int }}%"></div>
+    </div>
+
+    <div class="card {{ 'card-correct' if correct else 'card-incorrect' }}">
+
+        <div class="text-center">
+            {% if correct %}
+                <div class="result-icon">&#10003;</div>
+                <div class="result-label correct-label">Correct!</div>
+            {% else %}
+                <div class="result-icon">&#10007;</div>
+                <div class="result-label incorrect-label">Not quite</div>
+            {% endif %}
+        </div>
+
+        {% if not correct %}
+        <hr>
+        <div class="answer-box">
+            <p class="answer-box-label">Your answer</p>
+            <p class="answer-box-value text-incorrect mb-0">{{ user_answer }}</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-box-label">Correct answer</p>
+            <p class="answer-box-value text-correct mb-0">{{ correct_answer }}</p>
+        </div>
+        {% endif %}
+
+        <a href="{{ next_url }}" class="btn-next">
+            {% if question_num == total %}See Results{% else %}Next Question{% endif %}
+        </a>
+
+    </div>
 </div>
 </body>
 </html>

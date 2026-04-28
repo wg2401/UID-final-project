@@ -1,7 +1,7 @@
 #app.py
 import json
 import datetime
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask import send_from_directory
 
 app = Flask(__name__)
@@ -266,6 +266,45 @@ def results(quiz_type):
 
     return render_template("results.html", score=score, total=len(questions),
                            breakdown=breakdown, retry_url=retry_url)
+
+
+@app.route('/quiz/<int:question_num>/check', methods=['POST'])
+def quiz_check(question_num):
+    data = load_questions()
+    questions = data["quiz"]
+    q = questions[question_num - 1]
+    selected = request.get_json().get('answer', '').strip()
+    correct = (selected == q['answer'])
+
+    answers = session.get('quiz_answers', {})
+    answers[str(question_num)] = selected
+    session['quiz_answers'] = answers
+
+    total = len(questions)
+    next_url = url_for('quiz', question_num=question_num + 1) if question_num < total else url_for('results', quiz_type='quiz')
+    return jsonify({'correct': correct, 'correct_answer': q['answer'], 'next_url': next_url})
+
+
+@app.route('/final/<int:question_num>/check', methods=['POST'])
+def final_check(question_num):
+    data = load_questions()
+    questions = data["final_quiz"]
+    q = questions[question_num - 1]
+    selected = request.get_json().get('answer', '').strip()
+
+    if q.get('type') == 'text':
+        correct = text_answer_is_correct(selected, q['answer'])
+    else:
+        correct = (selected == q['answer'])
+
+    answers = session.get('final_answers', {})
+    answers[str(question_num)] = selected
+    session['final_answers'] = answers
+
+    total = len(questions)
+    next_url = url_for('final_quiz', question_num=question_num + 1) if question_num < total else url_for('results', quiz_type='final')
+    correct_display = ', '.join(q['answer']) if isinstance(q['answer'], list) else q['answer']
+    return jsonify({'correct': correct, 'correct_answer': correct_display, 'next_url': next_url})
 
 
 

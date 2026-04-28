@@ -2,30 +2,209 @@
 <html>
 <head>
     <title>Results</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F5F8FF;
+            color: #1E2A45;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; color: #1E2A45; }
+        .label-text { font-size: 14px; color: #8A96B0; }
+
+        .navbar {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #D8E2F5;
+            padding: 16px 24px;
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1E2A45 !important;
+        }
+        .btn-home { font-size: 14px; color: #8A96B0; text-decoration: none; }
+        .btn-home:hover { color: #2B5CE6; }
+
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #D8E2F5;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        /* Score */
+        .score-trophy { font-size: 48px; line-height: 1; }
+        .score-eyebrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: #8A96B0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 12px;
+        }
+        .score-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: #2B5CE6;
+            line-height: 1;
+            margin: 8px 0;
+        }
+        .score-message { font-size: 16px; color: #8A96B0; }
+
+        .progress {
+            background-color: #D8E2F5;
+            height: 10px;
+            border-radius: 5px;
+            margin: 16px 0 8px;
+        }
+        .progress-bar { background-color: #2B5CE6; border-radius: 5px; }
+
+        /* Buttons */
+        .btn-primary-fill {
+            background-color: #2B5CE6;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.15s;
+        }
+        .btn-primary-fill:hover { background-color: #1E47C8; color: #FFFFFF; }
+        .btn-outline-blue {
+            border: 1.5px solid #2B5CE6;
+            color: #2B5CE6;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 8px;
+            padding: 12px 24px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.15s;
+        }
+        .btn-outline-blue:hover { background-color: #EBF0FD; color: #2B5CE6; }
+
+        hr { border-color: #D8E2F5; margin: 24px 0; }
+        h5 { font-size: 20px; font-weight: 600; }
+
+        /* Accordion */
+        .accordion-item {
+            background-color: #FFFFFF;
+            border: 1px solid #D8E2F5 !important;
+            border-radius: 8px !important;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+        .accordion-button {
+            background-color: #FFFFFF;
+            color: #1E2A45;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            padding: 16px;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #F5F8FF;
+            color: #2B5CE6;
+            box-shadow: none;
+        }
+        .accordion-button:focus { box-shadow: none; }
+        .accordion-body {
+            background-color: #F5F8FF;
+            color: #1E2A45;
+            font-size: 15px;
+            padding: 16px;
+        }
+        .correct-row  { border-left: 3px solid #1A9E6A !important; }
+        .incorrect-row { border-left: 3px solid #D94F4F !important; }
+        .text-correct   { color: #1A9E6A; font-weight: 500; }
+        .text-incorrect { color: #D94F4F; font-weight: 500; }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2>Quiz Results</h2>
-    <h4>You scored {{ score }} out of {{ total }}</h4>
-    <hr>
 
-    <h5>Answer Breakdown:</h5>
-    {% for item in breakdown %}
-    <div class="mb-3">
-        <strong>{{ loop.index }}. {{ item.question }}</strong><br>
-        Your answer: {{ item.user_answer }}<br>
-        {% if item.correct %}
-            <span style="color: green;">Correct!</span>
+<nav class="navbar d-flex justify-content-between align-items-center">
+    <span class="navbar-brand">The Olympians</span>
+    <a href="/" class="btn-home">Home</a>
+</nav>
+
+<div class="container mt-4" style="max-width: 640px;">
+
+    <div class="card text-center">
+        <div class="score-trophy">&#127942;</div>
+        <p class="score-eyebrow">Your Score</p>
+        <div class="score-number">{{ score }}/{{ total }}</div>
+
+        {% set pct = (score / total * 100) | int %}
+        {% if pct == 100 %}
+            <p class="score-message">Perfect. You are a true Olympian scholar.</p>
+        {% elif pct >= 70 %}
+            <p class="score-message">Well done. The gods are impressed.</p>
+        {% elif pct >= 50 %}
+            <p class="score-message">Not bad. Keep studying the myths.</p>
         {% else %}
-            <span style="color: red;">Incorrect. The answer was: {{ item.correct_answer }}</span>
+            <p class="score-message">Keep practicing. Even the gods had to learn.</p>
         {% endif %}
-    </div>
-    {% endfor %}
 
-    <hr>
-    <a href="{{ retry_url }}" class="btn btn-primary">Retry</a>
-    <a href="/" class="btn btn-secondary">Home</a>
+        <div class="progress">
+            <div class="progress-bar" style="width: {{ pct }}%"></div>
+        </div>
+        <p class="label-text">{{ pct }}%</p>
+
+        <hr>
+        <div class="d-flex gap-3 justify-content-center">
+            <a href="{{ retry_url }}" class="btn-primary-fill">Try Again</a>
+            <a href="/" class="btn-outline-blue">Home</a>
+        </div>
+    </div>
+
+    <h5 class="mb-3">Answer Breakdown</h5>
+    <div class="accordion" id="resultsAccordion">
+        {% for item in breakdown %}
+        <div class="accordion-item {{ 'correct-row' if item.correct else 'incorrect-row' }}">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#q{{ loop.index }}">
+                    <span class="me-2 {{ 'text-correct' if item.correct else 'text-incorrect' }}">
+                        {{ '✓' if item.correct else '✗' }}
+                    </span>
+                    Q{{ loop.index }}: {{ item.question }}
+                </button>
+            </h2>
+            <div id="q{{ loop.index }}" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <p class="mb-1">
+                        <span class="label-text">Your answer: </span>
+                        <span class="{{ 'text-correct' if item.correct else 'text-incorrect' }}">
+                            {{ item.user_answer }}
+                        </span>
+                    </p>
+                    {% if not item.correct %}
+                    <p class="mb-0">
+                        <span class="label-text">Correct answer: </span>
+                        <span class="text-correct">{{ item.correct_answer }}</span>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

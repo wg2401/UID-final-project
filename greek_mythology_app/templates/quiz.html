@@ -2,42 +2,322 @@
 <html>
 <head>
     <title>{{ title }} - Question {{ question_num }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F5F8FF;
+            color: #1E2A45;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        h1,h2,h3,h4,h5 { font-family: 'Playfair Display', serif; color: #1E2A45; }
+        .label-text { font-size: 14px; color: #8A96B0; }
+
+        .navbar {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #D8E2F5;
+            padding: 16px 24px;
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1E2A45;
+        }
+        .btn-home { font-size: 14px; color: #8A96B0; text-decoration: none; }
+        .btn-home:hover { color: #2B5CE6; }
+
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #D8E2F5;
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .progress {
+            background-color: #D8E2F5;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 32px;
+        }
+        .progress-bar { background-color: #2B5CE6; border-radius: 4px; }
+
+        .quiz-badge {
+            display: inline-block;
+            background-color: #EBF0FD;
+            color: #2B5CE6;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1E2A45;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .choice-btn {
+            display: block;
+            width: 100%;
+            background-color: #F5F8FF;
+            color: #1E2A45;
+            border: 1.5px solid #D8E2F5;
+            border-radius: 8px;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: border-color 0.15s, background-color 0.15s;
+            line-height: 1.5;
+        }
+        .choice-btn:hover:not(:disabled) {
+            border-color: #2B5CE6;
+            background-color: #EBF0FD;
+            color: #2B5CE6;
+        }
+
+        .choice-btn.selected {
+            border-color: #2B5CE6;
+            background-color: #EBF0FD;
+            color: #2B5CE6;
+            font-weight: 500;
+        }
+
+        .choice-btn.correct-ans {
+            border-color: #1A9E6A;
+            background-color: #EDFAF4;
+            color: #1A9E6A;
+            font-weight: 500;
+        }
+        .choice-btn.wrong-ans {
+            border-color: #D94F4F;
+            background-color: #FDF0F0;
+            color: #D94F4F;
+            font-weight: 500;
+        }
+        .choice-btn:disabled { cursor: not-allowed; opacity: 0.85; }
+
+        .text-input {
+            background-color: #F5F8FF;
+            border: 1.5px solid #D8E2F5;
+            color: #1E2A45;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            padding: 14px 16px;
+            width: 100%;
+            transition: border-color 0.15s;
+        }
+        .text-input:focus {
+            outline: none;
+            border-color: #2B5CE6;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(43,92,230,0.12);
+        }
+        .text-input::placeholder { color: #8A96B0; }
+        .text-input.input-correct { border-color: #1A9E6A; background-color: #EDFAF4; }
+        .text-input.input-wrong   { border-color: #D94F4F; background-color: #FDF0F0; }
+        .text-input:disabled { opacity: 1; }
+
+        .btn-action {
+            width: 100%;
+            background-color: #2B5CE6;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.15s;
+        }
+        .btn-action:hover:not(:disabled) { background-color: #1E47C8; }
+        .btn-action:disabled {
+            background-color: #D8E2F5;
+            color: #8A96B0;
+            cursor: not-allowed;
+        }
+
+        .feedback-box {
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            display: none;
+        }
+        .feedback-box.correct  { background-color: #EDFAF4; border-left: 4px solid #1A9E6A; }
+        .feedback-box.incorrect { background-color: #FDF0F0; border-left: 4px solid #D94F4F; }
+        .feedback-result {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .feedback-result.correct   { color: #1A9E6A; }
+        .feedback-result.incorrect { color: #D94F4F; }
+        .feedback-answer { font-size: 15px; color: #1E2A45; margin: 0; }
+
+        hr { border-color: #D8E2F5; margin: 24px 0; }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2>{{ title }}</h2>
-    <p>Question {{ question_num }} of {{ total }}</p>
-    <hr>
 
-    <h4>{{ question.question }}</h4>
+<nav class="navbar d-flex justify-content-between align-items-center">
+    <span class="navbar-brand">The Olympians</span>
+    <a href="/" class="btn-home">Home</a>
+</nav>
 
-    <form method="POST">
-        {% if question.type == "text" %}
-            <div class="mb-3">
-                <input type="text" class="form-control" name="text_answer" placeholder="Type your answer here" required>
-            </div>
-        {% else %}
+<div class="container mt-4" style="max-width: 640px;">
+
+    <span class="quiz-badge">{{ title }}</span>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="label-text">Question {{ question_num }} of {{ total }}</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar" style="width: {{ (question_num / total * 100) | int }}%"></div>
+    </div>
+
+    <div class="card">
+        <p class="question-text">{{ question.question }}</p>
+        <hr>
+
+        <span id="question-num"  style="display:none">{{ question_num }}</span>
+        <span id="question-type" style="display:none">{{ question.type }}</span>
+        <span id="quiz-route"    style="display:none">{{ 'final' if title == 'Final Quiz' else 'quiz' }}</span>
+
+        {% if question.type != "text" %}
+        <div id="choices">
             {% for choice in question.choices %}
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="choice" value="{{ choice }}" id="{{ choice }}" required>
-                <label class="form-check-label" for="{{ choice }}">{{ choice }}</label>
-            </div>
+            <button class="choice-btn" data-answer="{{ choice }}">{{ choice }}</button>
             {% endfor %}
+        </div>
         {% endif %}
 
-        <br>
-        <button type="submit" class="btn btn-primary">
-            {% if question_num == total %}
-                Submit Quiz
-            {% else %}
-                Next Question
-            {% endif %}
-        </button>
-    </form>
+        {% if question.type == "text" %}
+        <div id="text-area">
+            <input type="text" class="text-input" id="text-answer"
+                   placeholder="Type your answer here..." autocomplete="off">
+        </div>
+        {% endif %}
 
-    <br>
-    <a href="/">Home</a>
+        <div class="feedback-box" id="feedback-box">
+            <p class="feedback-result" id="feedback-result"></p>
+            <p class="feedback-answer" id="feedback-answer"></p>
+        </div>
+
+        <button class="btn-action" id="action-btn" disabled>Check Answer</button>
+    </div>
+
 </div>
+
+<script>
+    const questionNum  = document.getElementById('question-num').textContent.trim();
+    const questionType = document.getElementById('question-type').textContent.trim();
+    const quizRoute    = document.getElementById('quiz-route').textContent.trim();
+    const actionBtn    = document.getElementById('action-btn');
+    const feedbackBox  = document.getElementById('feedback-box');
+
+    let selectedAnswer = null;
+    let answered       = false;
+    let nextUrl        = null;
+
+    document.querySelectorAll('.choice-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if (answered) return;
+            document.querySelectorAll('.choice-btn').forEach(function(b) {
+                b.classList.remove('selected');
+            });
+            btn.classList.add('selected');
+            selectedAnswer = btn.dataset.answer;
+            actionBtn.disabled = false;
+        });
+    });
+
+    var textInput = document.getElementById('text-answer');
+    if (textInput) {
+        textInput.addEventListener('input', function() {
+            actionBtn.disabled = (textInput.value.trim() === '');
+            selectedAnswer = textInput.value.trim();
+        });
+        textInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !actionBtn.disabled && !answered) {
+                actionBtn.click();
+            }
+        });
+    }
+
+    actionBtn.addEventListener('click', function() {
+        if (answered) {
+            // Second click: go to next question
+            window.location.href = nextUrl;
+            return;
+        }
+
+        if (!selectedAnswer) return;
+        answered = true;
+        actionBtn.disabled = true;
+
+        var checkUrl = '/' + quizRoute + '/' + questionNum + '/check';
+
+        fetch(checkUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ answer: selectedAnswer })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            nextUrl = data.next_url;
+
+            if (questionType !== 'text') {
+                document.querySelectorAll('.choice-btn').forEach(function(btn) {
+                    btn.disabled = true;
+                    btn.classList.remove('selected');
+                    if (btn.dataset.answer === data.correct_answer) {
+                        btn.classList.add('correct-ans');
+                    } else if (btn.dataset.answer === selectedAnswer && !data.correct) {
+                        btn.classList.add('wrong-ans');
+                    }
+                });
+            }
+
+            if (questionType === 'text' && textInput) {
+                textInput.disabled = true;
+                textInput.classList.add(data.correct ? 'input-correct' : 'input-wrong');
+            }
+
+            var resultEl = document.getElementById('feedback-result');
+            var answerEl = document.getElementById('feedback-answer');
+
+            feedbackBox.style.display = 'block';
+            feedbackBox.className = 'feedback-box ' + (data.correct ? 'correct' : 'incorrect');
+            resultEl.textContent = data.correct ? 'Correct!' : 'Not quite.';
+            resultEl.className = 'feedback-result ' + (data.correct ? 'correct' : 'incorrect');
+
+            if (!data.correct) {
+                answerEl.textContent = 'Correct answer: ' + data.correct_answer;
+            } else {
+                answerEl.textContent = '';
+            }
+
+            var isLast = actionBtn.textContent.trim() === 'Check Answer' &&
+                         nextUrl.includes('results');
+            actionBtn.disabled = false;
+            actionBtn.textContent = nextUrl.includes('results') ? 'See Results' : 'Next Question';
+        });
+    });
+</script>
+
 </body>
 </html>
