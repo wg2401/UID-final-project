@@ -163,10 +163,24 @@
         <p class="label-text">{{ pct }}%</p>
 
         <hr>
-        <div class="d-flex gap-3 justify-content-center">
-            <a href="{{ retry_url }}" class="btn-primary-fill">Try Again</a>
+
+        <div class="d-flex gap-3 justify-content-center mt-3">
+            {% if quiz_type == 'quiz' %}
+                {% if progress.unlock_state.final_unlocked %}
+                    <a href="/start/final" class="btn-primary-fill">Go to Final Quiz →</a>
+                {% else %}
+                    <a href="/learn" class="btn-primary-fill">Back to Learning Hub</a>
+                {% endif %}
+                <a href="{{ retry_url }}" class="btn-outline-blue">Retry Quiz</a>
+
+            {% else %}
+                <a href="/learn" class="btn-primary-fill">Back to Learning Hub</a>
+                <a href="{{ retry_url }}" class="btn-outline-blue">Retry Quiz</a>
+            {% endif %}
+
             <a href="/" class="btn-outline-blue">Home</a>
         </div>
+
     </div>
 
     <h5 class="mb-3">Answer Breakdown</h5>

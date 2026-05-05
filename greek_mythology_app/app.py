@@ -142,12 +142,11 @@ def get_learning_progress():
 def index():
     return render_template("index.html")
 
-
-# Start learning
 @app.route("/start/learn")
 def start_learn():
-    progress = build_learning_progress()
-    progress["started_at"] = str(datetime.datetime.now())
+    progress = get_learning_progress()
+    if progress["started_at"] is None:
+        progress["started_at"] = str(datetime.datetime.now())
     progress = update_unlock_state(progress)
     session["learning_progress"] = progress
     return redirect(url_for("learn_index"))
@@ -181,7 +180,6 @@ def match():
 def match_submit():
     data = request.get_json()
 
-    # Correct mapping (left_id → right_id)
     correct_map = {
         "1": "4",  # Zeus → Thunderbolt
         "2": "2",  # Poseidon → Trident
@@ -189,7 +187,6 @@ def match_submit():
         "4": "3"   # Aphrodite → Dove
     }
 
-    # For display (so you don’t show "1 → 2")
     LEFT_MAP = {
         "1": "Zeus",
         "2": "Poseidon",
@@ -197,35 +194,47 @@ def match_submit():
         "4": "Aphrodite"
     }
 
+    # fixed to match the actual data-ids in match.html
     RIGHT_MAP = {
-        "1": "Thunderbolt",
+        "1": "Owl",
         "2": "Trident",
-        "3": "Owl",
-        "4": "Dove"
+        "3": "Dove",
+        "4": "Thunderbolt"
     }
 
     score = 0
     total = len(correct_map)
-
     results = []
 
     for left_id, right_id in data.items():
         is_correct = correct_map.get(left_id) == right_id
-
         if is_correct:
             score += 1
-
         results.append({
-            "left": LEFT_MAP.get(left_id, left_id),
-            "right": RIGHT_MAP.get(right_id, right_id),
+            "left":    LEFT_MAP.get(left_id, left_id),
+            "right":   RIGHT_MAP.get(right_id, right_id),
             "correct": is_correct
         })
+
+    # ── save to session so quiz unlock logic can see it ──
+    progress = get_learning_progress()
+    progress["checkpoint_score"]        = score
+    progress["checkpoint_total"]        = total
+    progress["checkpoint_passed"]       = score >= CHECKPOINT_MIN_SCORE
+    progress["checkpoint_completed_at"] = str(datetime.datetime.now())
+    progress = update_unlock_state(progress)
+    session["learning_progress"] = progress
+
+    passed = progress["checkpoint_passed"]
+    quiz_unlocked = progress["unlock_state"]["quiz_unlocked"]
 
     return render_template(
         "match_results.html",
         score=score,
         total=total,
-        results=results
+        results=results,
+        passed=passed,
+        quiz_unlocked=quiz_unlocked
     )
 
 @app.route("/learn/<topic>")
@@ -443,7 +452,6 @@ def feedback(quiz_type, question_num):
                         question_num=question_num, total=total)
 
 
-#Results
 @app.route("/results/<quiz_type>")
 def results(quiz_type):
     data = load_questions()
@@ -463,21 +471,19 @@ def results(quiz_type):
     for i, q in enumerate(questions):
         user_answer = answers.get(str(i + 1), "No answer")
         correct_answer = q["answer"]
-
         if q.get("type") == "text":
             correct = text_answer_is_correct(user_answer, correct_answer)
         else:
             correct = user_answer == correct_answer
-
         if correct:
             score += 1
-
         breakdown.append({
             "question": q["question"],
             "user_answer": user_answer,
             "correct_answer": ", ".join(correct_answer) if isinstance(correct_answer, list) else correct_answer,
             "correct": correct
         })
+
     progress = get_learning_progress()
     progress["quiz_scores"][quiz_type] = {
         "score": score,
@@ -486,8 +492,20 @@ def results(quiz_type):
     }
     progress = update_unlock_state(progress)
     session["learning_progress"] = progress
+
+    if quiz_type == "final" and score >= 8:
+        return redirect(url_for("congrats", score=score, total=len(questions)))
+
     return render_template("results.html", score=score, total=len(questions),
-                           breakdown=breakdown, retry_url=retry_url)
+                           breakdown=breakdown, retry_url=retry_url,
+                           progress=progress, quiz_type=quiz_type)
+
+
+@app.route("/congrats")
+def congrats():
+    score = request.args.get("score", 0, type=int)
+    total = request.args.get("total", 10, type=int)
+    return render_template("congrats.html", score=score, total=total)
 
 
 @app.route('/quiz/<int:question_num>/check', methods=['POST'])
@@ -538,6 +556,8 @@ def learn_progress():
 @app.route('/data/<path:filename>')
 def data_files(filename):
     return send_from_directory('data', filename)
+
+
 
 
 if __name__ == "__main__":

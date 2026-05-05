@@ -2,37 +2,52 @@
 <html>
 <head>
     <title>Match the Columns</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/match.css') }}">
 </head>
 <body>
 
-<div class="container">
-    <h2>Match the Columns</h2>
+<nav class="om-navbar">
+    <a href="/" class="om-navbar-brand">The Olympians</a>
+    <a href="/learn" class="om-navbar-link">← Learning Hub</a>
+</nav>
 
-    <div class="match-container" id="match-container">
-        <canvas id="line-canvas"></canvas>
+<div class="om-page">
+    <div class="om-card">
 
-        <div class="column left">
-            <div class="item left-item" data-id="1">Zeus</div>
-            <div class="item left-item" data-id="2">Poseidon</div>
-            <div class="item left-item" data-id="3">Athena</div>
-            <div class="item left-item" data-id="4">Aphrodite</div>
+        <h2 style="text-align:center; margin-bottom: 8px;">Match the Columns</h2>
+        <p class="match-instruction">Select a god on the left, then select their symbol on the right.</p>
+
+        <div class="match-container" id="match-container">
+            <canvas id="line-canvas"></canvas>
+
+            <div class="match-col">
+                <div class="match-col-label">Gods</div>
+                <div class="match-item left-item" data-id="1">Zeus</div>
+                <div class="match-item left-item" data-id="2">Poseidon</div>
+                <div class="match-item left-item" data-id="3">Athena</div>
+                <div class="match-item left-item" data-id="4">Aphrodite</div>
+            </div>
+
+            <div class="match-col">
+                <div class="match-col-label">Symbols</div>
+                <div class="match-item right-item" data-id="1">Owl</div>
+                <div class="match-item right-item" data-id="2">Trident</div>
+                <div class="match-item right-item" data-id="3">Dove</div>
+                <div class="match-item right-item" data-id="4">Thunderbolt</div>
+            </div>
         </div>
 
-        <div class="column right">
-            <div class="item right-item" data-id="1">Owl</div>
-            <div class="item right-item" data-id="2">Trident</div>
-            <div class="item right-item" data-id="3">Dove</div>
-            <div class="item right-item" data-id="4">Thunderbolt</div>
+        <hr class="om-divider">
+
+        <div class="om-page-nav">
+            <a href="/learn" class="om-btn om-btn-outline">← Back</a>
+            <button id="submit-btn" class="om-btn om-btn-primary" style="display:none;">
+                See Results →
+            </button>
         </div>
-    </div>
 
-    <div class="actions">
-        <a href="/" class="btn-back">← Back</a>
-
-        <button id="submit-btn" class="btn-submit" style="display:none;">
-            See Results
-        </button>
     </div>
 </div>
 

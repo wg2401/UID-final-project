@@ -2,65 +2,94 @@
 <html>
 <head>
     <title>Athena</title>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root { --page-bg:#F5F8FF; --card-bg:#FFFFFF; --navy:#1E2A45; --accent:#2B5CE6; --accent-dark:#1E47C8; --accent-soft:#EBF0FD; --border:#D8E2F5; --muted:#8A96B0; }
-        body { background-color:var(--page-bg); color:var(--navy); font-family:'Inter',sans-serif; font-size:16px; line-height:1.6; }
-        h1,h2,h3,h4,h5,.navbar-brand { font-family:'Playfair Display',serif; color:var(--navy); font-weight:700; }
-        .navbar { background-color:var(--card-bg); border-bottom:1px solid var(--border); padding:16px 24px; }
-        .navbar-brand { font-size:22px; }
-        .nav-link-soft { color:var(--muted); text-decoration:none; font-size:14px; }
-        .nav-link-soft:hover { color:var(--accent); }
-        .page-card,.topic-card,.card { background-color:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:32px; box-shadow:0 8px 22px rgba(30,42,69,.05); }
-        .lesson-image { display:block; width:100%; max-width:420px; height:280px; object-fit:cover; object-position:center; border-radius:12px; border:1px solid var(--border); margin:0 auto 24px auto; background-color:var(--accent-soft); }
-        .section-heading { margin-top:24px; margin-bottom:12px; font-size:22px; }
-        ul { padding-left:1.25rem; } li { margin-bottom:8px; }
-        .alert-info { background-color:var(--accent-soft); color:var(--accent); border:1px solid var(--border); border-radius:12px; font-weight:500; }
-        .btn-primary,.btn-success { background-color:var(--accent)!important; border-color:var(--accent)!important; color:#fff!important; border-radius:8px; padding:10px 18px; font-weight:500; }
-        .btn-primary:hover,.btn-success:hover { background-color:var(--accent-dark)!important; border-color:var(--accent-dark)!important; }
-        .btn-secondary { background-color:var(--accent-soft)!important; border-color:var(--border)!important; color:var(--navy)!important; border-radius:8px; padding:10px 18px; font-weight:500; }
-        .btn-secondary:hover { color:var(--accent)!important; border-color:var(--accent)!important; }
-        hr { border-color:var(--border); margin:28px 0; opacity:1; }
-        #topics .card,#topics .topic-card { height:100%; border-radius:14px; border:1px solid var(--border); background-color:var(--card-bg); }
-        #topics img,.topic-card img,.card img:not(.lesson-image) { width:100%; height:190px; object-fit:cover; border-radius:10px; border:1px solid var(--border); background-color:var(--accent-soft); }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-<nav class="navbar d-flex justify-content-between align-items-center">
-    <span class="navbar-brand">The Olympians</span>
-    <a href="/" class="nav-link-soft">Home</a>
+
+<nav class="om-navbar">
+    <a href="/" class="om-navbar-brand">The Olympians</a>
+    <a href="/learn" class="om-navbar-link">← Learning Hub</a>
 </nav>
-<div class="container my-5" style="max-width: 780px;">
-    <div class="page-card">
-        <h1 class="text-center mb-4">Athena</h1>
-        <img src="{{ url_for('static', filename='images/athena.png') }}" class="lesson-image" alt="Athena">
-        <ul>
-            <li>Goddess of wisdom and strategy</li>
-            <li>Daughter of Zeus</li>
-            <li>Represents intelligence and planning</li>
-            <li>Strategic warfare</li>
-        </ul>
-        <h4 class="section-heading">Personality</h4>
-        <ul>
-            <li>Calm and logical</li>
-            <li>Values knowledge</li>
-            <li>Protector of heroes</li>
-        </ul>
-        <h4 class="section-heading">Symbols</h4>
-        <ul>
-            <li>Owl</li>
-            <li>Olive tree</li>
-            <li>Armor</li>
-        </ul>
-        <hr>
-        <div class="d-flex gap-2 flex-wrap">
-            <a href="/learn" class="btn btn-secondary">Back</a>
+
+<div class="om-page">
+    <div class="om-card">
+
+        <!-- God header -->
+        <div class="god-hero">
+            <div class="god-hero-icon">🦉</div>
+            <div class="god-hero-name">Athena</div>
+            <div class="god-hero-title">Goddess of Wisdom and War Strategy</div>
+        </div>
+
+        <!-- Image -->
+        <img src="{{ url_for('static', filename='images/athena.png') }}"
+             class="lesson-image" alt="Athena">
+
+        <!-- Overview -->
+        <div class="info-section">
+            <div class="info-section-title">Overview</div>
+            <div class="info-item">
+                <span class="info-item-icon">💫</span>
+                <span>Goddess of wisdom, warfare strategy, and crafts</span>
+            </div>
+            <div class="info-item">
+                <span class="info-item-icon">💫</span>
+                <span>Born fully armored from the head of Zeus</span>
+            </div>
+            <div class="info-item">
+                <span class="info-item-icon">💫</span>
+                <span>Patron goddess of the city of Athens</span>
+            </div>
+            <div class="info-item">
+                <span class="info-item-icon">💫</span>
+                <span>Champion of heroes like Odysseus and Perseus</span>
+            </div>
+        </div>
+
+        <!-- Personality -->
+        <div class="info-section">
+            <div class="info-section-title">Personality</div>
+            <div class="info-item">
+                <span class="info-item-icon">✨</span>
+                <span>Calm, strategic, and highly intelligent</span>
+            </div>
+            <div class="info-item">
+                <span class="info-item-icon">✨</span>
+                <span>Favors reason and diplomacy over brute force</span>
+            </div>
+            <div class="info-item">
+                <span class="info-item-icon">✨</span>
+                <span>Fierce protector of justice and civilization</span>
+            </div>
+        </div>
+
+        <!-- Symbols -->
+        <div class="info-section">
+            <div class="info-section-title">Symbols</div>
+            <div class="info-item">
+                <span class="info-item-icon">🦉</span>
+                <span>Owl — represents wisdom and keen sight</span>
+            </div>
+            <div class="info-item">
+                <span class="info-item-icon">🫒</span>
+                <span>Olive tree — her gift to Athens, symbol of peace</span>
+            </div>
+            <div class="info-item">
+                <span class="info-item-icon">🛡️</span>
+                <span>Aegis shield — emblem of divine protection</span>
+            </div>
+        </div>
+
+        <hr class="om-divider">
+
+        <div class="om-page-nav">
+            <a href="/learn" class="om-btn om-btn-outline">← Back</a>
             <form method="POST" action="/learn/complete/athena">
-                <button type="submit" class="btn btn-success">Next Lesson</button>
+                <button type="submit" class="om-btn om-btn-primary">Next Lesson →</button>
             </form>
         </div>
+
     </div>
 </div>
 
