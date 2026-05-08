@@ -162,6 +162,18 @@
         </div>
         <p class="label-text">{{ pct }}%</p>
 
+        {% if quiz_type == 'quiz' and not progress.unlock_state.final_unlocked %}
+            <p class="score-message" style="margin-top: 8px;">
+                You need <strong style="color: #1E2A45;">10 out of 15</strong> to unlock the Final Quiz.
+            </p>
+        {% endif %}
+
+        {% if quiz_type == 'final' and score < 8 %}
+            <p class="score-message" style="margin-top: 8px;">
+                You need <strong style="color: #1E2A45;">8 out of 10</strong> to complete the course.
+            </p>
+        {% endif %}
+
         <hr>
 
         <div class="d-flex gap-3 justify-content-center mt-3">

@@ -1,4 +1,3 @@
-/* Match container layout */
 .match-container {
     position: relative;
     display: flex;
@@ -14,7 +13,6 @@
     width: 45%;
 }
 
-/* Canvas overlay for lines */
 #line-canvas {
     position: absolute;
     top: 0;
@@ -24,7 +22,6 @@
     pointer-events: none;
 }
 
-/* Results page */
 .score-box {
     margin: 20px 0;
     font-size: 22px;

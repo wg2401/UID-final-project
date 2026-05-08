@@ -23,25 +23,29 @@
         Work through the learning topics, complete the checkpoint, and unlock the quizzes.
     </p>
 
-    <!-- Stats row -->
     <div class="row g-3 mb-3">
         <div class="col-md-3 col-6">
             <div class="om-card-sm text-center">
                 <div class="text-label">Topics Completed</div>
-                <h3 style="margin: 8px 0 0;">{{ completed_count }} / {{ total_topics }}</h3>
+                <div class="stat-number">{{ completed_count }} / {{ total_topics }}</div>
             </div>
         </div>
         <div class="col-md-3 col-6">
             <div class="om-card-sm text-center">
                 <div class="text-label">Checkpoint Score</div>
-                <h3 style="margin: 8px 0 0;">{{ progress.checkpoint_score }} / {{ progress.checkpoint_total }}</h3>
+                <div class="stat-number">{{ progress.checkpoint_score }} / {{ progress.checkpoint_total }}</div>
+                {% if progress.checkpoint_passed %}
+                    <span class="om-badge om-badge-success">Passed</span>
+                {% elif progress.checkpoint_score > 0 %}
+                    <span class="om-badge om-badge-danger">Need {{ 3 - progress.checkpoint_score }} more</span>
+                {% endif %}
             </div>
         </div>
         <div class="col-md-3 col-6">
             <div class="om-card-sm text-center">
                 <div class="text-label">Quiz Score</div>
                 {% if progress.quiz_scores.quiz %}
-                    <h3 style="margin: 8px 0 4px;">{{ progress.quiz_scores.quiz.score }} / {{ progress.quiz_scores.quiz.total }}</h3>
+                    <div class="stat-number">{{ progress.quiz_scores.quiz.score }} / {{ progress.quiz_scores.quiz.total }}</div>
                     {% if progress.unlock_state.final_unlocked %}
                         <span class="om-badge om-badge-success">Passed</span>
                     {% else %}
@@ -62,7 +66,7 @@
             <div class="om-card-sm text-center">
                 <div class="text-label">Final Quiz Score</div>
                 {% if progress.quiz_scores.final %}
-                    <h3 style="margin: 8px 0 4px;">{{ progress.quiz_scores.final.score }} / {{ progress.quiz_scores.final.total }}</h3>
+                    <div class="stat-number">{{ progress.quiz_scores.final.score }} / {{ progress.quiz_scores.final.total }}</div>
                     {% if progress.quiz_scores.final.score >= 8 %}
                         <span class="om-badge om-badge-success">Passed</span>
                     {% else %}
@@ -81,7 +85,6 @@
         </div>
     </div>
 
-    <!-- Progress bar -->
     <div class="om-progress" style="margin-bottom: 16px;">
         <div
             id="topic-progress-bar"
@@ -91,7 +94,6 @@
         ></div>
     </div>
 
-    <!-- Step alert -->
     <div style="margin-bottom: 24px;">
         {% if not progress.unlock_state.quiz_unlocked %}
             {% set topics_done = completed_count == total_topics %}
@@ -117,18 +119,16 @@
         {% else %}
             <div class="om-alert om-alert-success">
                 <strong>All quizzes unlocked!</strong>
-                You can take the Final Quiz whenever you are ready.
+                Score 8 or more out of 10 on the Final Quiz to complete the course.
             </div>
         {% endif %}
     </div>
 
-    <!-- Topics -->
     <h3 style="margin-bottom: 16px;">Learn Topics</h3>
     <div class="row g-3" id="topics"></div>
 
     <hr class="om-divider">
 
-    <!-- Action buttons -->
     <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
         {% if completed_count == total_topics %}
             <a href="/match" class="om-btn om-btn-primary">Symbol Matching</a>

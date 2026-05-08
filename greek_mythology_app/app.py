@@ -1,4 +1,3 @@
-#app.py
 import json
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
@@ -137,7 +136,6 @@ def get_learning_progress():
     progress = update_unlock_state(progress)
     return progress
 
-#Home
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -152,7 +150,6 @@ def start_learn():
     return redirect(url_for("learn_index"))
 
 
-# Learning index
 @app.route("/learn")
 def learn_index():
     lessons_data = load_lessons()
@@ -181,10 +178,10 @@ def match_submit():
     data = request.get_json()
 
     correct_map = {
-        "1": "4",  # Zeus → Thunderbolt
-        "2": "2",  # Poseidon → Trident
-        "3": "1",  # Athena → Owl
-        "4": "3"   # Aphrodite → Dove
+        "1": "4",  
+        "2": "2",  
+        "3": "1",  
+        "4": "3"   
     }
 
     LEFT_MAP = {
@@ -194,7 +191,6 @@ def match_submit():
         "4": "Aphrodite"
     }
 
-    # fixed to match the actual data-ids in match.html
     RIGHT_MAP = {
         "1": "Owl",
         "2": "Trident",
@@ -216,7 +212,6 @@ def match_submit():
             "correct": is_correct
         })
 
-    # ── save to session so quiz unlock logic can see it ──
     progress = get_learning_progress()
     progress["checkpoint_score"]        = score
     progress["checkpoint_total"]        = total
@@ -343,7 +338,6 @@ def save_checkpoint():
     })
 
 
-#Quiz 1
 @app.route("/start/quiz")
 def start_quiz():
     progress = get_learning_progress()
@@ -377,7 +371,6 @@ def quiz(question_num):
                            total=len(questions), title="Quiz")
 
 
-#Final Quiz
 @app.route("/start/final")
 def start_final():
     progress = get_learning_progress()
@@ -411,7 +404,6 @@ def final_quiz(question_num):
                            total=len(questions), title="Final Quiz")
 
 
-#Feedback
 @app.route("/feedback/<quiz_type>/<int:question_num>")
 def feedback(quiz_type, question_num):
     data = load_questions()
