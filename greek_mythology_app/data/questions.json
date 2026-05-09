@@ -2,22 +2,22 @@
   "quiz": [
     {
       "question": "Who is the king of the Olympian gods?",
-      "choices": ["Poseidon", "Zeus", "Apollo", "Hermes"],
+      "choices": ["Poseidon", "Zeus", "Apollo", "Hades"],
       "answer": "Zeus"
     },
     {
       "question": "Which god controls the sea?",
-      "choices": ["Zeus", "Ares", "Poseidon", "Dionysus"],
+      "choices": ["Zeus", "Apollo", "Poseidon", "Hades"],
       "answer": "Poseidon"
     },
     {
       "question": "Who is the goddess of wisdom?",
-      "choices": ["Hera", "Athena", "Aphrodite", "Artemis"],
+      "choices": ["Aphrodite", "Athena", "Artemis", "Hades"],
       "answer": "Athena"
     },
     {
-      "question": "Which god is associated with love and beauty?",
-      "choices": ["Athena", "Hera", "Aphrodite", "Demeter"],
+      "question": "Which goddess is associated with love and beauty?",
+      "choices": ["Athena", "Artemis", "Aphrodite", "Hades"],
       "answer": "Aphrodite"
     },
     {
@@ -27,111 +27,112 @@
     },
     {
       "question": "Which symbol is linked to Poseidon?",
-      "choices": ["Thunderbolt", "Trident", "Owl", "Bow"],
+      "choices": ["Thunderbolt", "Trident", "Owl", "Dove"],
       "answer": "Trident"
     },
     {
-      "question": "Who is known for strategy in war?",
-      "choices": ["Ares", "Athena", "Zeus", "Apollo"],
+      "question": "Who is known for strategic warfare rather than brute force?",
+      "choices": ["Zeus", "Athena", "Poseidon", "Apollo"],
       "answer": "Athena"
     },
     {
-      "question": "Which god is associated with music and the sun?",
-      "choices": ["Apollo", "Hermes", "Hephaestus", "Ares"],
-      "answer": "Apollo"
+      "question": "What is Zeus's primary symbol of power?",
+      "choices": ["Thunderbolt", "Trident", "Owl", "Dove"],
+      "answer": "Thunderbolt"
     },
     {
-      "question": "Who is the messenger of the gods?",
-      "choices": ["Hermes", "Zeus", "Poseidon", "Dionysus"],
-      "answer": "Hermes"
+      "question": "Which symbol represents Athena?",
+      "choices": ["Dove", "Rose", "Owl", "Thunderbolt"],
+      "answer": "Owl"
     },
     {
-      "question": "Which goddess is linked to agriculture?",
-      "choices": ["Artemis", "Demeter", "Hera", "Athena"],
-      "answer": "Demeter"
+      "question": "Which symbol represents Aphrodite?",
+      "choices": ["Owl", "Dove", "Trident", "Thunderbolt"],
+      "answer": "Dove"
     },
     {
-      "question": "Who is the god of war (brute force)?",
-      "choices": ["Athena", "Ares", "Apollo", "Hermes"],
-      "answer": "Ares"
+      "question": "Which god controls both the sea and earthquakes?",
+      "choices": ["Zeus", "Hades", "Poseidon", "Apollo"],
+      "answer": "Poseidon"
     },
     {
-      "question": "Which god is known for wine and celebration?",
-      "choices": ["Dionysus", "Zeus", "Poseidon", "Hephaestus"],
-      "answer": "Dionysus"
-    },
-    {
-      "question": "Who is the goddess of the hunt?",
-      "choices": ["Artemis", "Aphrodite", "Hera", "Demeter"],
+      "question": "Who is the twin sister of Apollo?",
+      "choices": ["Athena", "Aphrodite", "Artemis", "Hades"],
       "answer": "Artemis"
     },
     {
-      "question": "Which god is associated with fire and blacksmithing?",
-      "choices": ["Apollo", "Ares", "Hephaestus", "Hermes"],
-      "answer": "Hephaestus"
+      "question": "Which god is associated with music and the sun?",
+      "choices": ["Zeus", "Artemis", "Apollo", "Poseidon"],
+      "answer": "Apollo"
     },
     {
-      "question": "Who is the queen of the gods?",
-      "choices": ["Athena", "Hera", "Demeter", "Artemis"],
-      "answer": "Hera"
+      "question": "Who is the patron goddess of the city of Athens?",
+      "choices": ["Aphrodite", "Zeus", "Poseidon", "Athena"],
+      "answer": "Athena"
+    },
+    {
+      "question": "Who rules the Underworld?",
+      "choices": ["Zeus", "Poseidon", "Apollo", "Hades"],
+      "answer": "Hades"
     }
   ],
-  "final_quiz": [
+"final_quiz": [
     {
       "question": "Who is the mother of Athena?",
       "type": "mcq",
-      "choices": ["Hera", "Metis", "Leto", "Demeter"],
+      "choices": ["Aphrodite", "Metis", "Artemis", "Athena"],
       "answer": "Metis"
     },
     {
       "question": "Name the Titan that Zeus overthrew to become king of the gods.",
       "type": "text",
-      "answer": "Cronus"
+      "answer": ["Cronus"]
     },
     {
-      "question": "Which god was born from Zeus's head?",
+      "question": "Which god was born fully armored from Zeus's head?",
       "type": "mcq",
-      "choices": ["Apollo", "Hermes", "Athena", "Ares"],
+      "choices": ["Apollo", "Artemis", "Athena", "Aphrodite"],
       "answer": "Athena"
     },
     {
-      "question": "Who is the twin sister of Apollo?",
+      "question": "Which animal is Poseidon said to have created?",
       "type": "mcq",
-      "choices": ["Athena", "Artemis", "Hera", "Persephone"],
-      "answer": "Artemis"
+      "choices": ["Eagle", "Horse", "Owl", "Dove"],
+      "answer": "Horse"
     },
     {
-      "question": "Which river do souls cross to enter the underworld?",
+      "question": "What city is Athena the patron goddess of?",
       "type": "text",
-      "answer": ["River Styx", "Styx"]
+      "answer": ["Athens"]
     },
     {
-      "question": "Which god is associated with fire and craftsmanship?",
+      "question": "What was Athena's gift to the city that now bears her name?",
       "type": "mcq",
-      "choices": ["Hephaestus", "Ares", "Hermes", "Dionysus"],
-      "answer": "Hephaestus"
+      "choices": ["Olive tree", "Thunderbolt", "Dove", "Trident"],
+      "answer": "Olive tree"
     },
     {
-      "question": "Name the hero known for completing twelve labors.",
+      "question": "Which goddess is known as the champion and protector of heroes?",
+      "type": "mcq",
+      "choices": ["Aphrodite", "Artemis", "Athena", "Apollo"],
+      "answer": "Athena"
+    },
+    {
+      "question": "Aphrodite is the goddess of love and what else?",
+      "type": "mcq",
+      "choices": ["Wisdom", "Beauty", "Strategy", "War"],
+      "answer": "Beauty"
+    },
+    {
+      "question": "Zeus rules the sky, Poseidon rules the sea. Name the brother who rules the Underworld.",
       "type": "text",
-      "answer": "Heracles"
+      "answer": ["Hades"]
     },
     {
-      "question": "Who is the wife of Hades?",
+      "question": "Which god overthrew the Titans and became king of the Olympians?",
       "type": "mcq",
-      "choices": ["Hera", "Aphrodite", "Persephone", "Demeter"],
-      "answer": "Persephone"
-    },
-    {
-      "question": "Which god is known as the messenger and trickster?",
-      "type": "mcq",
-      "choices": ["Apollo", "Hermes", "Ares", "Zeus"],
-      "answer": "Hermes"
-    },
-    {
-      "question": "Name one of the three Fates in Greek mythology.",
-      "type": "text",
-      "answer": ["Clotho", "Lachesis", "Atropos"]
+      "choices": ["Poseidon", "Hades", "Apollo", "Zeus"],
+      "answer": "Zeus"
     }
   ]
 }

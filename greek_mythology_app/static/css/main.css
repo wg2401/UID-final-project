@@ -305,3 +305,11 @@ p  { font-size: 16px; line-height: 1.6; color: var(--dark); }
     color: var(--dark);
     margin: 8px 0 4px;
 }
+
+.lesson-image-landscape {
+    max-width: 760px;
+}
+
+.lesson-image-symbols {
+    max-width: 500px;
+}

@@ -33,14 +33,26 @@
         <div class="col-md-3 col-6">
             <div class="om-card-sm text-center">
                 <div class="text-label">Checkpoint Score</div>
-                <div class="stat-number">{{ progress.checkpoint_score }} / {{ progress.checkpoint_total }}</div>
-                {% if progress.checkpoint_passed %}
-                    <span class="om-badge om-badge-success">Passed</span>
-                {% elif progress.checkpoint_score > 0 %}
-                    <span class="om-badge om-badge-danger">Need {{ 3 - progress.checkpoint_score }} more</span>
+                {% if progress.checkpoint_completed_at %}
+                    <div class="stat-number">{{ progress.checkpoint_score }} / {{ progress.checkpoint_total }}</div>
+                    {% if progress.checkpoint_passed %}
+                        <span class="om-badge om-badge-success">Passed</span>
+                    {% else %}
+                        <span class="om-badge om-badge-danger">Need {{ 3 - progress.checkpoint_score }} more</span>
+                    {% endif %}
+                {% else %}
+                    <div style="margin-top: 8px;">
+                        {% if completed_count == total_topics %}
+                            <span class="om-badge om-badge-success">Unlocked</span>
+                        {% else %}
+                            <span class="om-badge om-badge-grey">Locked</span>
+                        {% endif %}
+                    </div>
                 {% endif %}
             </div>
+
         </div>
+        
         <div class="col-md-3 col-6">
             <div class="om-card-sm text-center">
                 <div class="text-label">Quiz Score</div>
@@ -75,7 +87,7 @@
                 {% else %}
                     <div style="margin-top: 8px;">
                         {% if progress.unlock_state.final_unlocked %}
-                            <span class="om-badge om-badge-warning">Unlocked</span>
+                            <span class="om-badge om-badge-success">Unlocked</span>
                         {% else %}
                             <span class="om-badge om-badge-grey">Locked</span>
                         {% endif %}
@@ -107,7 +119,7 @@
             {% elif topics_done and not checkpoint_done %}
                 <div class="om-alert om-alert-info">
                     <strong>Step 2 of 3 — Complete the Checkpoint</strong><br>
-                    You have finished all the learning topics. Now match the gods to their symbols.
+                    You have finished all the learning topics. Now take the Checkpoint to test your knowledge of the gods and their symbols.
                     You need at least 3 out of 4 correct to unlock the quiz.
                 </div>
             {% endif %}
@@ -131,9 +143,9 @@
 
     <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
         {% if completed_count == total_topics %}
-            <a href="/match" class="om-btn om-btn-primary">Symbol Matching</a>
+            <a href="/match" class="om-btn om-btn-primary">Checkpoint</a>
         {% else %}
-            <button class="om-btn om-btn-primary" disabled>Symbol Matching 🔒</button>
+            <button class="om-btn om-btn-primary" disabled>Checkpoint 🔒</button>
         {% endif %}
 
         {% if progress.unlock_state.quiz_unlocked %}

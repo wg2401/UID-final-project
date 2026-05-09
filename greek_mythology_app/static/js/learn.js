@@ -97,7 +97,7 @@ if (progressBar) {
 
 function formatTopicName(text) {
     if (text === "symbols") {
-        return "Symbols Checkpoint";
+        return "Symbols";
     }
 
     if (text === "relationships") {
@@ -109,27 +109,27 @@ function formatTopicName(text) {
 
 function getTopicDescription(topic) {
     if (topic === "zeus") {
-        return "Learn about Zeus, king of the gods, and his connection to the sky and lightning.";
+        return "Learn about Zeus, king of the gods, and his connection to the sky and lightning";
     }
 
     if (topic === "poseidon") {
-        return "Learn about Poseidon, ruler of the sea, earthquakes, and oceans.";
+        return "Learn about Poseidon, ruler of the sea, earthquakes, and oceans";
     }
 
     if (topic === "athena") {
-        return "Learn about Athena, goddess of wisdom, strategy, and intelligence.";
+        return "Learn about Athena, goddess of wisdom, strategy, and intelligence";
     }
 
     if (topic === "aphrodite") {
-        return "Learn about Aphrodite, goddess of love, beauty, and desire.";
+        return "Learn about Aphrodite, goddess of love, beauty, and desire";
     }
 
     if (topic === "relationships") {
-        return "Review how the gods are connected and why those family ties matter.";
+        return "Review how the gods are connected and why those family ties matter";
     }
 
     if (topic === "symbols") {
-        return "Complete the checkpoint by matching symbols to the correct gods.";
+        return "Learn the symbols associated with each Olympian god and what they represent";
     }
 
     return "Open this learning topic.";

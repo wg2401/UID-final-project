@@ -9,7 +9,7 @@
 
 <nav class="om-navbar">
     <a href="/" class="om-navbar-brand">The Olympians</a>
-    <a href="/learn" class="om-navbar-link">← Learning Hub</a>
+    <a href="/learn" class="om-navbar-link">Learning Hub</a>
 </nav>
 
 <div class="om-page-narrow">
@@ -26,11 +26,11 @@
     </div>
 
     {% if quiz_unlocked %}
-        <div class="om-alert om-alert-info">✓ You have passed the symbol matching activity. The quiz is now unlocked.</div>
+        <div class="om-alert om-alert-info">✓ Checkpoint passed. The quiz is now unlocked.</div>
     {% elif passed %}
-        <div class="om-alert om-alert-info">✓ Symbol matching passed. Complete all learning sections to unlock the quiz.</div>
+        <div class="om-alert om-alert-info">✓ Checkpoint passed. Complete all learning topics to unlock the quiz.</div>
     {% else %}
-        <div class="om-alert om-alert-danger">You need at least {{ 3 }} correct to unlock the quiz. Try again below.</div>
+        <div class="om-alert om-alert-danger">You need at least 3 correct to unlock the quiz. Try again below.</div>
     {% endif %}
 
     <div class="om-card-sm" style="margin-bottom: 24px;">
@@ -54,17 +54,15 @@
         {% endfor %}
     </div>
 
-    <div class="om-page-nav">
+    <div style="display: flex; justify-content: center; gap: 12px;">
         {% if quiz_unlocked %}
-            <a href="/learn" class="om-btn om-btn-primary">Go to Learning Hub →</a>
+            <a href="/learn" class="om-btn om-btn-primary">Back to Learning Hub</a>
         {% elif passed %}
             <a href="/learn" class="om-btn om-btn-primary">Back to Learning Hub</a>
-
         {% else %}
             <a href="/match" class="om-btn om-btn-primary">Try Again</a>
-            <a href="/learn" class="om-btn om-btn-primary">Back to Learning Hub</a>
+            <a href="/learn" class="om-btn om-btn-outline">Back to Learning Hub</a>
         {% endif %}
-        
     </div>
 
 </div>
