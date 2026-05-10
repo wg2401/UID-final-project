@@ -49,7 +49,7 @@ if (progressBar) {
                 if (completed) {
                     statusText.innerHTML = '<span class="badge bg-success">Completed</span>';
                 } else if (visited) {
-                    statusText.innerHTML = '<span class="badge bg-primary">Visited</span>';
+                    statusText.innerHTML = '<span class="badge bg-primary">In Progress</span>';
                 } else {
                     statusText.innerHTML = '<span class="badge bg-secondary">Not Started</span>';
                 }

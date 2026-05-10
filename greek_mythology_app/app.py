@@ -473,7 +473,8 @@ def results(quiz_type):
             "question": q["question"],
             "user_answer": user_answer,
             "correct_answer": ", ".join(correct_answer) if isinstance(correct_answer, list) else correct_answer,
-            "correct": correct
+            "correct": correct,
+            "explanation": q.get("explanation", "")
         })
 
     progress = get_learning_progress()

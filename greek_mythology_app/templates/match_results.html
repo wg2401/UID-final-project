@@ -30,11 +30,13 @@
     {% elif passed %}
         <div class="om-alert om-alert-info">✓ Checkpoint passed. Complete all learning topics to unlock the quiz.</div>
     {% else %}
-        <div class="om-alert om-alert-danger">You need at least 3 correct to unlock the quiz. Try again below.</div>
+        <div class="om-alert om-alert-danger">
+            You need at least 3 correct to unlock the quiz. Go back to the Learning Hub to review the symbols and try again.
+        </div>
     {% endif %}
 
     <div class="om-card-sm" style="margin-bottom: 24px;">
-        <div class="row header" style="display:grid; grid-template-columns:1fr 1fr 1fr; padding: 8px 0; border-bottom: 1px solid var(--border);">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; padding: 8px 0; border-bottom: 1px solid var(--border);">
             <div class="text-label">God</div>
             <div class="text-label">Your Match</div>
             <div class="text-label">Result</div>
@@ -55,13 +57,11 @@
     </div>
 
     <div style="display: flex; justify-content: center; gap: 12px;">
-        {% if quiz_unlocked %}
-            <a href="/learn" class="om-btn om-btn-primary">Back to Learning Hub</a>
-        {% elif passed %}
+        {% if quiz_unlocked or passed %}
             <a href="/learn" class="om-btn om-btn-primary">Back to Learning Hub</a>
         {% else %}
-            <a href="/match" class="om-btn om-btn-primary">Try Again</a>
-            <a href="/learn" class="om-btn om-btn-outline">Back to Learning Hub</a>
+            <a href="/learn" class="om-btn om-btn-primary">Back to Learning Hub</a>
+            <a href="/match" class="om-btn om-btn-outline">Try Again</a>
         {% endif %}
     </div>
 

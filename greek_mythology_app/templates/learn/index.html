@@ -112,26 +112,31 @@
             {% set checkpoint_done = progress.checkpoint_passed %}
             {% if not topics_done %}
                 <div class="om-alert om-alert-info">
-                    <strong>Step 1 of 3 — Keep Learning</strong><br>
-                    Complete all {{ total_topics }} topics to unlock the symbol matching checkpoint.
+                    <strong>Step 1 of 4 — Keep Learning</strong><br>
+                    Complete all {{ total_topics }} topics to unlock the Checkpoint.
                     You have {{ completed_count }} of {{ total_topics }} done.
                 </div>
             {% elif topics_done and not checkpoint_done %}
                 <div class="om-alert om-alert-info">
-                    <strong>Step 2 of 3 — Complete the Checkpoint</strong><br>
+                    <strong>Step 2 of 4 — Complete the Checkpoint</strong><br>
                     You have finished all the learning topics. Now take the Checkpoint to test your knowledge of the gods and their symbols.
                     You need at least 3 out of 4 correct to unlock the quiz.
                 </div>
             {% endif %}
         {% elif progress.unlock_state.quiz_unlocked and not progress.unlock_state.final_unlocked %}
             <div class="om-alert om-alert-success">
-                <strong>Step 3 of 3 — Take the Quiz</strong><br>
+                <strong>Step 3 of 4 — Take the Quiz</strong><br>
                 Score 10 or more out of 15 to unlock the Final Quiz.
+            </div>
+        {% elif progress.unlock_state.final_unlocked and not progress.quiz_scores.final %}
+            <div class="om-alert om-alert-success">
+                <strong>Step 4 of 4 — Take the Final Quiz</strong><br>
+                Score 8 or more out of 10 to complete the course.
             </div>
         {% else %}
             <div class="om-alert om-alert-success">
-                <strong>All quizzes unlocked!</strong>
-                Score 8 or more out of 10 on the Final Quiz to complete the course.
+                <strong>Course Complete!</strong>
+                You have completed The Olympians. Retake the Final Quiz anytime to improve your score.
             </div>
         {% endif %}
     </div>

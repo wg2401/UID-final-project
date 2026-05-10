@@ -37,7 +37,6 @@
             margin-bottom: 24px;
         }
 
-        /* Score */
         .score-trophy { font-size: 48px; line-height: 1; }
         .score-eyebrow {
             font-family: 'Inter', sans-serif;
@@ -66,7 +65,6 @@
         }
         .progress-bar { background-color: #2B5CE6; border-radius: 5px; }
 
-        /* Buttons */
         .btn-primary-fill {
             background-color: #2B5CE6;
             color: #FFFFFF;
@@ -99,7 +97,6 @@
         hr { border-color: #D8E2F5; margin: 24px 0; }
         h5 { font-size: 20px; font-weight: 600; }
 
-        /* Accordion */
         .accordion-item {
             background-color: #FFFFFF;
             border: 1px solid #D8E2F5 !important;
@@ -207,15 +204,20 @@
             <div id="q{{ loop.index }}" class="accordion-collapse collapse">
                 <div class="accordion-body">
                     <p class="mb-1">
-                        <span class="label-text">Your answer: </span>
+                        <span style="color:#1E2A45;">Your answer: </span>
                         <span class="{{ 'text-correct' if item.correct else 'text-incorrect' }}">
                             {{ item.user_answer }}
                         </span>
                     </p>
                     {% if not item.correct %}
-                    <p class="mb-0">
-                        <span class="label-text">Correct answer: </span>
+                    <p class="mb-1">
+                        <span style="color:#1E2A45;">Correct answer: </span>
                         <span class="text-correct">{{ item.correct_answer }}</span>
+                    </p>
+                    {% endif %}
+                    {% if item.explanation %}
+                    <p class="mb-0" style="font-size:14px; color:#1E2A45; margin-top:8px;">
+                        {{ item.explanation }}
                     </p>
                     {% endif %}
                 </div>

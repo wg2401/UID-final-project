@@ -3,136 +3,161 @@
     {
       "question": "Who is the king of the Olympian gods?",
       "choices": ["Poseidon", "Zeus", "Apollo", "Hades"],
-      "answer": "Zeus"
+      "answer": "Zeus",
+      "explanation": "Zeus is the king of the Olympian gods, ruling over the sky and all other gods from Mount Olympus."
     },
     {
       "question": "Which god controls the sea?",
       "choices": ["Zeus", "Apollo", "Poseidon", "Hades"],
-      "answer": "Poseidon"
+      "answer": "Poseidon",
+      "explanation": "Poseidon is the god of the sea and wields the trident as his symbol of power over the waters."
     },
     {
       "question": "Who is the goddess of wisdom?",
       "choices": ["Aphrodite", "Athena", "Artemis", "Hades"],
-      "answer": "Athena"
+      "answer": "Athena",
+      "explanation": "Athena is the goddess of wisdom, and her symbol (the owl) reflects her role as a deity of knowledge and intelligence."
     },
     {
       "question": "Which goddess is associated with love and beauty?",
       "choices": ["Athena", "Artemis", "Aphrodite", "Hades"],
-      "answer": "Aphrodite"
+      "answer": "Aphrodite",
+      "explanation": "Aphrodite is the goddess of love and beauty, with the dove as her symbol representing love and harmony."
     },
     {
       "question": "What is Zeus primarily associated with?",
       "choices": ["Fire", "Sky", "Sea", "Underworld"],
-      "answer": "Sky"
+      "answer": "Sky",
+      "explanation": "Zeus rules the sky, and his iconic weapon (the thunderbolt) reflects his dominion over the heavens."
     },
     {
       "question": "Which symbol is linked to Poseidon?",
       "choices": ["Thunderbolt", "Trident", "Owl", "Dove"],
-      "answer": "Trident"
+      "answer": "Trident",
+      "explanation": "The trident is Poseidon's iconic weapon and symbol, representing his power over both the sea and earthquakes."
     },
     {
       "question": "Who is known for strategic warfare rather than brute force?",
       "choices": ["Zeus", "Athena", "Poseidon", "Apollo"],
-      "answer": "Athena"
+      "answer": "Athena",
+      "explanation": "Athena is the goddess of wisdom and strategic warfare, favoring reason and diplomacy over brute force."
     },
     {
       "question": "What is Zeus's primary symbol of power?",
       "choices": ["Thunderbolt", "Trident", "Owl", "Dove"],
-      "answer": "Thunderbolt"
+      "answer": "Thunderbolt",
+      "explanation": "The thunderbolt is Zeus's weapon and primary symbol, representing his authority as ruler of the sky and king of the gods."
     },
     {
       "question": "Which symbol represents Athena?",
       "choices": ["Dove", "Rose", "Owl", "Thunderbolt"],
-      "answer": "Owl"
+      "answer": "Owl",
+      "explanation": "The owl is Athena's symbol, representing wisdom (the core of her identity as the goddess of knowledge and strategy)."
     },
     {
       "question": "Which symbol represents Aphrodite?",
       "choices": ["Owl", "Dove", "Trident", "Thunderbolt"],
-      "answer": "Dove"
+      "answer": "Dove",
+      "explanation": "The dove is Aphrodite's symbol, reflecting her role as the goddess of love and beauty."
     },
     {
       "question": "Which god controls both the sea and earthquakes?",
       "choices": ["Zeus", "Hades", "Poseidon", "Apollo"],
-      "answer": "Poseidon"
+      "answer": "Poseidon",
+      "explanation": "Poseidon's domain extends beyond the sea to earthquakes as well, and he wields the trident as his symbol of that power."
     },
     {
       "question": "Who is the twin sister of Apollo?",
       "choices": ["Athena", "Aphrodite", "Artemis", "Hades"],
-      "answer": "Artemis"
+      "answer": "Artemis",
+      "explanation": "Artemis is the goddess of the hunt and the twin sister of Apollo, both children of Zeus."
     },
     {
       "question": "Which god is associated with music and the sun?",
       "choices": ["Zeus", "Artemis", "Apollo", "Poseidon"],
-      "answer": "Apollo"
+      "answer": "Apollo",
+      "explanation": "Apollo is the god of music and the sun, making him one of the most celebrated Olympians."
     },
     {
       "question": "Who is the patron goddess of the city of Athens?",
       "choices": ["Aphrodite", "Zeus", "Poseidon", "Athena"],
-      "answer": "Athena"
+      "answer": "Athena",
+      "explanation": "Athena won the patronage of the city by gifting it an olive tree, which was judged more useful than Poseidon's saltwater spring."
     },
     {
       "question": "Who rules the Underworld?",
       "choices": ["Zeus", "Poseidon", "Apollo", "Hades"],
-      "answer": "Hades"
+      "answer": "Hades",
+      "explanation": "Hades is the ruler of the Underworld, the realm where souls go after death."
     }
   ],
-"final_quiz": [
+  "final_quiz": [
     {
       "question": "Who is the mother of Athena?",
       "type": "mcq",
       "choices": ["Aphrodite", "Metis", "Artemis", "Athena"],
-      "answer": "Metis"
+      "answer": "Metis",
+      "explanation": "Metis was a Titaness of wisdom and Athena's mother. Zeus swallowed Metis while she was pregnant, and Athena was later born fully armored from his head."
     },
     {
       "question": "Name the Titan that Zeus overthrew to become king of the gods.",
       "type": "text",
-      "answer": ["Cronus"]
+      "answer": ["Cronus"],
+      "explanation": "Cronus was the leader of the Titans and the father of Zeus, Poseidon, and Hades. Zeus overthrew Cronus and took his place as king of the gods."
     },
     {
       "question": "Which god was born fully armored from Zeus's head?",
       "type": "mcq",
       "choices": ["Apollo", "Artemis", "Athena", "Aphrodite"],
-      "answer": "Athena"
+      "answer": "Athena",
+      "explanation": "Athena's mother was Metis, a Titaness of wisdom. Zeus swallowed Metis while she was pregnant, and Athena later burst fully grown and armored from his head."
     },
     {
       "question": "Which animal is Poseidon said to have created?",
       "type": "mcq",
       "choices": ["Eagle", "Horse", "Owl", "Dove"],
-      "answer": "Horse"
+      "answer": "Horse",
+      "explanation": "Poseidon is said to have created the first horse, which became one of his sacred symbols alongside the trident."
     },
     {
       "question": "What city is Athena the patron goddess of?",
       "type": "text",
-      "answer": ["Athens"]
+      "answer": ["Athens"],
+      "explanation": "Athens is named after Athena, who became its patron goddess after winning a contest against Poseidon by gifting the city an olive tree."
     },
     {
       "question": "What was Athena's gift to the city that now bears her name?",
       "type": "mcq",
       "choices": ["Olive tree", "Thunderbolt", "Dove", "Trident"],
-      "answer": "Olive tree"
+      "answer": "Olive tree",
+      "explanation": "Athena offered an olive tree to the city while Poseidon offered a saltwater spring. The olive tree was chosen as more practical, earning Athena the role of patron goddess."
     },
     {
       "question": "Which goddess is known as the champion and protector of heroes?",
       "type": "mcq",
       "choices": ["Aphrodite", "Artemis", "Athena", "Apollo"],
-      "answer": "Athena"
+      "answer": "Athena",
+      "explanation": "Athena is known as a champion of heroes, using her wisdom and strategic skill to guide and protect them."
     },
     {
       "question": "Aphrodite is the goddess of love and what else?",
       "type": "mcq",
       "choices": ["Wisdom", "Beauty", "Strategy", "War"],
-      "answer": "Beauty"
+      "answer": "Beauty",
+      "explanation": "Aphrodite rules over both love and beauty, and her symbols (the dove and the rose) represent love, harmony, and passion."
     },
     {
       "question": "Zeus rules the sky, Poseidon rules the sea. Name the brother who rules the Underworld.",
       "type": "text",
-      "answer": ["Hades"]
+      "answer": ["Hades"],
+      "explanation": "The three brothers divided the world: Zeus took the sky, Poseidon the sea, and Hades the Underworld (the realm of the dead)."
     },
     {
       "question": "Which god overthrew the Titans and became king of the Olympians?",
       "type": "mcq",
       "choices": ["Poseidon", "Hades", "Apollo", "Zeus"],
-      "answer": "Zeus"
+      "answer": "Zeus",
+      "explanation": "Zeus overthrew Cronus (the leader of the Titans and his own father) and became king of the gods, ruling the sky from Mount Olympus."
     }
   ]
 }
