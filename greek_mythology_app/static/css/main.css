@@ -72,12 +72,16 @@ p  { font-size: 16px; line-height: 1.6; color: var(--dark); }
     text-decoration: none;
 }
 .om-navbar-brand:hover { color: var(--accent); }
+
 .om-navbar-link {
     font-size: 14px;
-    color: var(--grey-light);
+    color: var(--dark);
     text-decoration: none;
 }
-.om-navbar-link:hover { color: var(--accent); }
+.om-navbar-link:hover { 
+    color: var(--accent);
+    text-decoration: underline;
+}
 
 .om-card {
     background-color: var(--card-bg);
@@ -179,9 +183,11 @@ p  { font-size: 16px; line-height: 1.6; color: var(--dark); }
 .om-alert-warning { background-color: var(--warning-bg);   color: var(--dark); border-left: 4px solid var(--warning); }
 .om-alert-danger  { background-color: var(--danger-bg);    color: var(--dark); border-left: 4px solid var(--danger);  }
 
+
+
 .om-divider {
     border: none;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid #868686;
     margin: 24px 0;
 }
 
@@ -198,9 +204,8 @@ p  { font-size: 16px; line-height: 1.6; color: var(--dark); }
 
 .god-hero {
     background-color: var(--white);
-    border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 32px;
+    padding: 24px 32px;
     text-align: center;
     margin-bottom: 24px;
 }
